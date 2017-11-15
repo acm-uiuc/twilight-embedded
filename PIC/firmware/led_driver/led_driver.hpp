@@ -7,7 +7,7 @@
   #include <avr/power.h>
 #endif
 
-#define LED_PIN 13
+#define LED_PIN 18
 #define STRIP_LENGTH 35
 
 // Parameter 1 = number of pixels in strip
@@ -20,7 +20,7 @@
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
 
 void colorWipe(uint32_t c, uint8_t wait) ;
-uint32_t Wheel(byte WheelPos);
+uint32_t Wheel(Adafruit_NeoPixel, byte WheelPos);
 void rainbowCycle(uint8_t wait);
 
 typedef struct color_struct {
@@ -35,6 +35,7 @@ public:
     void setup();
     void UpdateFrame();
     void SetColor(uint8_t r, uint8_t g, uint8_t b);
+    Adafruit_NeoPixel GetStrip();
 private:
     Adafruit_NeoPixel strip;
     Color color; 
@@ -44,6 +45,10 @@ LEDFrame::LEDFrame() {
    this->strip = Adafruit_NeoPixel(STRIP_LENGTH, LED_PIN, NEO_GRB + NEO_KHZ800);
    this->color = Color{255,255,255};
    return;
+}
+
+Adafruit_NeoPixel LEDFrame::GetStrip() {
+    return this->strip;
 }
 
 void LEDFrame::setup() {
@@ -93,7 +98,7 @@ void rainbow(Adafruit_NeoPixel strip, uint8_t wait) {
     uint16_t i, j;
     for(j=0; j<256; j++) {
         for(i=0; i<strip.numPixels(); i++) {
-            strip.setPixelColor(i, Wheel((i+j) & 255));
+            strip.setPixelColor(i, Wheel(strip, (i+j) & 255));
         }
         strip.show();
         delay(wait);
@@ -106,7 +111,7 @@ void rainbowCycle(Adafruit_NeoPixel strip, uint8_t wait) {
   
     for(j=0; j<256*5; j++) { // 5 cycles of all colors on wheel
         for(i=0; i< strip.numPixels(); i++) {
-            strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + j) & 255));
+            strip.setPixelColor(i, Wheel(strip, ((i * 256 / strip.numPixels()) + j) & 255));
         }
         strip.show();
         delay(wait);
@@ -134,7 +139,7 @@ void theaterChaseRainbow(Adafruit_NeoPixel strip, uint8_t wait) {
     for (int j=0; j < 256; j++) {     // cycle all 256 colors in the wheel
         for (int q=0; q < 3; q++) {
             for (uint16_t i=0; i < strip.numPixels(); i=i+3) {
-                strip.setPixelColor(i+q, Wheel( (i+j) % 255));    //turn every third pixel on
+                strip.setPixelColor(i+q, Wheel(strip, (i+j) % 255));    //turn every third pixel on
             }
             strip.show();
   
