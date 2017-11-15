@@ -40,7 +40,7 @@ void setup() {
 
 void loop() {
     ctrlr.run();
-    rainbow(frame.GetStrip(), 20);
+    frame.SetColor(0,0,255);
     send_msg("BLUE");
     std::vector<String> incomming = recv_msgs();
     for (int i = 0; i < incomming.size(); i++) {
