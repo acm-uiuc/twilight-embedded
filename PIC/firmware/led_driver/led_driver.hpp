@@ -7,7 +7,7 @@
   #include <avr/power.h>
 #endif
 
-#define LED_PIN 9
+#define LED_PIN 8
 #define STRIP_LENGTH 35
 
 // Parameter 1 = number of pixels in strip
