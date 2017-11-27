@@ -16,7 +16,7 @@ std::vector<String> recv_msgs();
 
 typedef struct NetworkExchange_struct {
     std::vector<String> inbox;
-    //std::vector<String> outbox;
+    std::vector<String> outbox;
 } NetworkExchange ;
 
 NetworkExchange interconnect = NetworkExchange();
@@ -50,16 +50,20 @@ void handle_network_msgs() {
     }
 
     //Send messages in outbox
-    //for (int i = 0; i < interconnect.outbox.size(); i++) {
-    //    multicast(interconnect.outbox[i]);
-    //}
-    //interconnect.outbox.clear();
+    for (int i = 0; i < interconnect.outbox.size(); i++) {
+        multicast(interconnect.outbox[i]);
+    }
+    interconnect.outbox.clear();
     return;
 }
 
 void send_msg(String msg) {
-    //interconnect.outbox.push_back(msg);
-    multicast(msg); 
+    interconnect.outbox.push_back(msg);
+    //multicast(msg); 
+}
+
+void send_msgs(std::vector<String> msgs) {
+    interconnect.outbox.push_back(msgs);
 }
 
 std::vector<String> recv_msgs() {
@@ -68,6 +72,5 @@ std::vector<String> recv_msgs() {
     Serial.println(interconnect.inbox.size());
     return msgs;
 }
-
 
 #endif //NETWORKING_H

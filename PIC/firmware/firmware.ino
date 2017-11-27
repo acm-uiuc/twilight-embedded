@@ -3,52 +3,44 @@
 #include <Thread.h>
 #include "networking/networking.hpp"
 #include "led_driver/led_driver.hpp"
-#include "device_i2c/device_i2c.hpp"
+#include "node_slave/node_slave.hpp"
 
-Thread LEDs = Thread();
-Thread Network = Thread();
-Thread DeviceI2C = Thread();
-ThreadController ctrlr = ThreadController();
+Thread LEDThread = Thread();
+Thread NetworkThread = Thread();
+Thread NodeSlaveThread = Thread();
+ThreadController ThreadCtrlr = ThreadController();
 
 void setup() {
     
     //Setup LED Thread 
     setup_frame();
-    LEDs.enabled = true;
-    LEDs.setInterval(10);
-    LEDs.onRun(update_frame);
+    LEDThread.enabled = true;
+    LEDThread.setInterval(10);
+    LEDThread.onRun(update_frame);
 
     //Setup Network Thread
     setup_networking();
-    Network.enabled = true;
-    Network.setInterval(10);
-    Network.onRun(handle_network_msgs);
+    NetworkThread.enabled = true;
+    NetworkThread.setInterval(10);
+    NetworkThread.onRun(handle_network_msgs);
     
     //DeviceI2C
-    /*setup_i2c();
-    DeviceI2C.enable = true;
-    DeviceI2C.setInterval(10);
-    DeviceI2C.onRun(handle_i2c_msgs);*/
+    setup_i2c();
+    NodeSlaveThread.enable = true;
+    NodeSlaveThread.setInterval(10);
+    NodeSlaveThread.onRun(handle_i2c_msgs);
 
-    ctrlr.add(&LEDs);
-    ctrlr.add(&Network);
-    ctrlr.add(&DeviceI2C);
+    ThreadCtrlr.add(&LEDs);
+    ThreadCtrlr.add(&Network);
+    ThreadCtrlr.add(&DeviceI2C);
 
+    rainbow(get_strip(), 10000) //Boot Complete
     Serial.begin(9600); //DEBUGGING
 
 }
 
 void loop() {
-    ctrlr.run();
-    frame.SetColor(0,0,255);
-    send_msg("BLUE");
-    std::vector<String> incomming = recv_msgs();
-    for (int i = 0; i < incomming.size(); i++) {
-        Serial.println(incomming[i]);
-        if (incomming[i].startsWith(String("BLUE"))) {
-            frame.SetColor(0,0,255);
-        }
-    }
+    ThreadCtrlr.run();
 }
 
 
