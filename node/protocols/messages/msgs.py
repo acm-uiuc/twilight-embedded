@@ -37,6 +37,8 @@ class Message(abc.ABC):
     def deserialize(str, source=None):
         '''
         deserialize a string for use in an application
+        Format:
+        [MSG TYPE]:[CONTENT]
         '''
         if str.startswith("LED:"):
             return led.LEDMessage.deserialize(str)
