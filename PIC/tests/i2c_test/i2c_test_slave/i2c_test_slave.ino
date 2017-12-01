@@ -26,7 +26,10 @@ void receiveData(int numByte){
         byteArray[count] = Wire.read();
       }
     }
-    digitalWrite(PIN, HIGH);
+     digitalWrite(9, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);                       // wait for a second
+  digitalWrite(9, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);                       // wait for a second
 }  
 
 void sendData() {
