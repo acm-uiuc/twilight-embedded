@@ -7,25 +7,21 @@ int byteArray[4];
 
 void setup() {
     Wire.begin(0x12);
-    Wire.onReceive(receiveData);
+    Wire.onReceive(receiveEvent);
     Wire.onRequest(sendData);
     pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {}
 
-void receiveData(int numByte){
-    while(Wire.available()){
-      if(count < 4){
-        byteArray[count] = Wire.read();
-        count++;
-      }
-      else{
-        count = 0;
-        byteArray[count] = Wire.read();
-      }
-    }                    // wait for a second
-}  
+void receiveEvent(int howMany) {
+  while (1 < Wire.available()) { // loop through all but the last
+    char c = Wire.read(); // receive byte as a character
+    Serial.print(c);         // print the character
+  }
+  int x = Wire.read();    // receive byte as an integer
+  Serial.println(x);         // print the integer
+}
 
 void sendData() {
     Wire.write(data.c_str());
