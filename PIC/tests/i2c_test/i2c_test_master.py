@@ -30,13 +30,8 @@ smsNumber = ""
 
 if __name__ == '__main__':
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(numberInterruptPIN, GPIO.IN)
-    GPIO.setup(messageInterruptPIN, GPIO.IN)
 
     i2c = smbus.SMBus(1)
-
-    GPIO.add_event_detect(numberInterruptPIN, GPIO.RISING)
-    GPIO.add_event_detect(messageInterruptPIN, GPIO.RISING)
 
     while 1:
         try:  
