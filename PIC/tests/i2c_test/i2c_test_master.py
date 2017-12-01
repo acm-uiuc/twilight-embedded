@@ -8,6 +8,7 @@ slaveAddress = 0x12
 def readMessageFromArduino():
     global smsMessage
     data_received_from_Arduino = i2c.read_i2c_block_data(slaveAddress, 0,15)
+    print(data_received_from_Arduino)
     for i in range(len(data_received_from_Arduino)):
         smsMessage += chr(data_received_from_Arduino[i])
 
