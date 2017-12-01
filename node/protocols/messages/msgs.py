@@ -2,11 +2,14 @@ import abc
 from enum import Enum
 import localization
 import led
+import data
+import cmd
 
 class MessageType(Enum):
     LOC = 1
     LED = 2
     DATA = 3
+    CMD = 4
 
 class Source(Enum):
     SELF = 0
@@ -44,5 +47,7 @@ class Message(abc.ABC):
             return led.LEDMessage.deserialize(str)
         elif str.startswith("LOC:"):
             return localization.LocalizationMessage.deserialize(str, source)
+        elif str.startswith("DATA:"):
+            return data.DataMessage.deserialize(str)
         else:
             raise ValueError

@@ -1,6 +1,6 @@
 import msgs
 
-class LEDMessages(msgs.Message):
+class LEDMessage(msgs.Message):
     def __init__(self, color):
         #TODO: Right now we will only support solid colors, need to change this later 
         self.color = color
@@ -9,6 +9,7 @@ class LEDMessages(msgs.Message):
     def serialize(self):
         return "{}:{},{},{}".format(self.type.name, self.color[0], self.color[1], self.color[2])
 
+    @staticmethod
     def deserialize(str):
         if str.startswith("LED:"):
             components = (str[len("LED:"):]).split(,)

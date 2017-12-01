@@ -14,6 +14,7 @@ class LocalizationMessage(msgs.Message):
     def serialize(self):
         return "{}:{},{},{},{},{}.{}".format(self.type.name, self.ID, self.location[0], self.location[1], self.hops, self.ttl, self.origin_id)
 
+    @staticmethod
     def deserialize(str, source):
         if str.startswith("LOC:"):
             components = (str[len("LOC:"):]).split(,)
