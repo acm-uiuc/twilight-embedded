@@ -1,7 +1,7 @@
 #include <Wire.h>
 
-static const char messageInterrupt = A1;
-static const char numberInterrupt = 5;
+static const char messageInterrupt = A0;
+static const char numberInterrupt = A1;
 
 int flag = 0;
 
