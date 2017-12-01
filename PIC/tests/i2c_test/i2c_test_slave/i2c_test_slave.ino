@@ -15,11 +15,6 @@ void setup() {
 void loop() {}
 
 void receiveData(int numByte){
-       digitalWrite(9, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
-  digitalWrite(9, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000);
-
     while(Wire.available()){
       if(count < 4){
         byteArray[count] = Wire.read();
@@ -29,11 +24,7 @@ void receiveData(int numByte){
         count = 0;
         byteArray[count] = Wire.read();
       }
-    }
-     digitalWrite(9, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
-  digitalWrite(9, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000);                       // wait for a second
+    }                    // wait for a second
 }  
 
 void sendData() {
