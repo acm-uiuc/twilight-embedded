@@ -27,13 +27,12 @@ if __name__ == '__main__':
 
     while 1:
         try:
-            try:
-                #readMessageFromArduino()
-                ledout_values = [0x33, 0x33, 0x33, 0x33, 0x33, 0x33]
-                for i in ledout_values:
-                    i2c.write_byte(slaveAddress, i)
-            except IOError:
-                pass
+           
+            #readMessageFromArduino()
+            ledout_values = [0x33, 0x33, 0x33, 0x33, 0x33, 0x33]
+            for i in ledout_values:
+                i2c.write_byte(slaveAddress, i)
+
             try:
                 readMessageFromArduino()
             except IOError:
