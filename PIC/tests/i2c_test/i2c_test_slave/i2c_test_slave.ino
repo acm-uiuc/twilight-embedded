@@ -17,26 +17,9 @@ void setup() {
     digitalWrite(numberInterrupt, LOW);
     digitalWrite(messageInterrupt, LOW);
 
-    trigger_numberInterrupt();
-    delay(100);
-    trigger_messageInterrupt();
 }
 
 void loop() {}
-
-void trigger_numberInterrupt() {
-    digitalWrite(numberInterrupt, HIGH);
-    flag = 2;
-    delay(10);
-    digitalWrite(numberInterrupt, LOW);
-}
-
-void trigger_messageInterrupt() {
-    digitalWrite(messageInterrupt, HIGH);
-    flag = 1;
-    delay(10);
-    digitalWrite(messageInterrupt, LOW);
-}
 
 void receiveData(int bytes) {}
 

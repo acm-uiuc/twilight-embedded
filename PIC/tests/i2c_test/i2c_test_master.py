@@ -4,8 +4,6 @@ import RPi.GPIO as GPIO
 import smbus
 
 slaveAddress = 0x12    
-numberInterruptPIN = 8
-messageInterruptPIN = 11
 
 def readMessageFromArduino():
     global smsMessage
@@ -41,17 +39,16 @@ if __name__ == '__main__':
     GPIO.add_event_detect(messageInterruptPIN, GPIO.RISING)
 
     while 1:
-        try:
-            if GPIO.event_detected(numberInterruptPIN): 
-                try:
-                    readMessageFromArduino() 
-                except IOError:
-                    pass
-            if GPIO.event_detected(messageInterruptPIN):
-                try:
-                    readNumberFromArduino()
-                except IOError:
-                    pass
+        try:  
+            try:
+                readMessageFromArduino() 
+            except IOError:
+                pass
+        
+            try:
+                readNumberFromArduino()
+            except IOError:
+                pass
 
         except KeyboardInterrupt:
                GPIO.cleanup()
