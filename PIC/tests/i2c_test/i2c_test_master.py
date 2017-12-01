@@ -31,7 +31,7 @@ if __name__ == '__main__':
                 #readMessageFromArduino()
                 ledout_values = [0x33, 0x33, 0x33, 0x33, 0x33, 0x33]
                 for i in ledout_values:
-                    bus.write_byte(slaveAddress, i)
+                    i2c.write_byte(slaveAddress, i)
             except IOError:
                 pass
             try:
