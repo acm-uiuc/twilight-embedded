@@ -3,7 +3,7 @@
 #define PIN 9
 String data = "";
 int count = 0;
-int byteArray[4];
+char byteArray[4];
 
 void setup() {
     Wire.begin(0x12);
@@ -28,7 +28,7 @@ void receiveEvent(int howMany) {
 }
 
 void sendData() {
-    Wire.write(data.c_str());
+    Wire.write(byteArray);
 }
 
 
