@@ -15,16 +15,6 @@ def readMessageFromArduino():
     data_received_from_Arduino =""
     smsMessage = ""
 
-def readNumberFromArduino():
-    global smsNumber
-    data_received_from_Arduino = i2c.read_i2c_block_data(slaveAddress, 0,15)
-    for i in range(len(data_received_from_Arduino)):
-        smsNumber += chr(data_received_from_Arduino[i])
-
-    print(smsNumber.encode('utf-8'))
-    data_received_from_Arduino = ""
-    smsNumber = ""
-
 smsMessage = ""
 smsNumber = ""
 
@@ -39,11 +29,5 @@ if __name__ == '__main__':
                 readMessageFromArduino() 
             except IOError:
                 pass
-        
-            try:
-                readNumberFromArduino()
-            except IOError:
-                pass
-
         except KeyboardInterrupt:
                GPIO.cleanup()
