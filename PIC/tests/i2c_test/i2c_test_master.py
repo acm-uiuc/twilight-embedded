@@ -4,8 +4,8 @@ import RPi.GPIO as GPIO
 import smbus
 
 slaveAddress = 0x12    
-numberInterruptPIN = 19
-messageInterruptPIN = 12
+numberInterruptPIN = 8
+messageInterruptPIN = 11
 
 def readMessageFromArduino():
     global smsMessage
