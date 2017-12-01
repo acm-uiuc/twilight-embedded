@@ -4,6 +4,7 @@
 #include "networking/networking.hpp"
 #include "../constants/directions.hpp"
 #include "Arduino.h" 
+#include <Wire.h>
 
 ///////////////////////// MAIN CTRLR THREAD //////////////////////////
 // The Node Slave instance controls execution of operations on the 
@@ -45,6 +46,10 @@ void NodeSlave::SendMsgsToNetwork() {
 
 void NodeSlave::SendMsgsToNode() {
     //I2C Magic
+    for (int i = 0; i < this->node_outbox.size(); i++) {
+        Wire.write(this->node_outbox[i].size());
+        Wire.write(this->node_outbox[i])
+    }
     this->node_outbox.clear();
 }
 

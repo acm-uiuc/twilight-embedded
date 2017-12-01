@@ -15,12 +15,16 @@ void setup() {
 void loop() {}
 
 void receiveEvent(int howMany) {
-  while (1 < Wire.available()) { // loop through all but the last
-    char c = Wire.read(); // receive byte as a character
-    Serial.print(c);         // print the character
-  }
-  int x = Wire.read();    // receive byte as an integer
-  Serial.println(x);         // print the integer
+ while(Wire.available()){
+      if(count < 4){
+        byteArray[count] = Wire.read();
+        count++;
+      }
+      else{
+        count = 0;
+        byteArray[count] = Wire.read();
+      }
+    }        // print the integer
 }
 
 void sendData() {
