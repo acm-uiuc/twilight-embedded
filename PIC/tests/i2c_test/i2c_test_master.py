@@ -3,15 +3,14 @@
 import RPi.GPIO as GPIO
 import smbus
 
-slaveAddress = 0x12    
-DEVICE_REG_MODE1 = 0x00
+slaveAddress = 0x12
+DEVICE_REG_LEDOUT0= 0x00
 
 def readMessageFromArduino():
     global smsMessage
     data_received_from_Arduino = i2c.read_i2c_block_data(slaveAddress, 0,15)
     print '[{}]'.format(', '.join(hex(x) for x in data_received_from_Arduino))
     for i in range(len(data_received_from_Arduino)):
-        if 
         smsMessage += chr(data_received_from_Arduino[i])
 
     print(smsMessage.encode('utf-8'))
@@ -27,15 +26,16 @@ if __name__ == '__main__':
     i2c = smbus.SMBus(1)
 
     while 1:
-        try:  
+        try:
             try:
-                #readMessageFromArduino() 
+                #readMessageFromArduino()
                 ledout_values = [0x33, 0x33, 0x33, 0x33, 0x33, 0x33]
-                bus.write_i2c_block_data(slaveAddress, DEVICE_REG_LEDOUT0, ledout_values)
+                for i in ledout_values:
+                    bus.write_byte(slaveAddress, i)
             except IOError:
                 pass
             try:
-                readMessageFromArduino() 
+                readMessageFromArduino()
             except IOError:
                 pass
         except KeyboardInterrupt:
