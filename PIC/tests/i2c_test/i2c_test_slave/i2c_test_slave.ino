@@ -2,6 +2,8 @@
 
 #define PIN 9
 String data = "";
+int count = 0;
+int byteArray[4];
 
 void setup() {
     Wire.begin(0x12);
@@ -12,13 +14,21 @@ void setup() {
 
 void loop() {}
 
-void receiveData(int bytes) {
-    data = "";
-    while( Wire.available()){
-        data += (char)Wire.read();
+void receiveData(int numByte){
+
+    while(Wire.available()){
+      if(count < 4){
+        byteArray[count] = Wire.read();
+        count++;
+      }
+      else{
+        count = 0;
+        byteArray[count] = Wire.read();
+      }
     }
-    digitalWrite(PIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-}
+    digitalWrite(PIN, HIGH);
+}  
+
 void sendData() {
     Wire.write(data.c_str());
 }
