@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import smbus
 
 slaveAddress = 0x12
-DEVICE_REG_LEDOUT0= 0x00
+DEVICE_REG_LEDOUT0= 0x09
 
 def readMessageFromArduino():
     global smsMessage
@@ -30,8 +30,7 @@ if __name__ == '__main__':
            
             #readMessageFromArduino()
             ledout_values = [0x33, 0x33, 0x33, 0x33, 0x33, 0x33]
-            for i in ledout_values:
-                i2c.write_byte(slaveAddress, i)
+            i2c.write_i2c_block_data(slaveAddress, 0x03, ledout_values)
 
             try:
                 readMessageFromArduino()
