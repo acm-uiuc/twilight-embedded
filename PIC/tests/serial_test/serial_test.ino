@@ -27,7 +27,7 @@ void setup() {
     ctrlr.add(&Network);
     ctrlr.add(&DeviceI2C);
 
-    frame.SetColor(255,255,255);
+    frame.SetColor(0,255,0);
 
 }
 
