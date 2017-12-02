@@ -29,6 +29,8 @@ private:
     std::vector<String> led_cmds;            // QUEUE OF COMMANDS TO RUN ON THE LEDS
 }
 
+int count = 0;
+
 void NodeSlave::GetIncommingNetworkMsgs() {
     this->node_outbox.push_back(recv_msgs());
     return;
@@ -36,8 +38,18 @@ void NodeSlave::GetIncommingNetworkMsgs() {
 
 void NodeSlave::GetIncommingNodeMsgs() {
     //I2C Magic
-
-    this->node_inbox.push_back();
+    char buf[32];
+    while(Wire.available()){
+        if(count < 32){
+            byteArray[count] = Wire.read();
+            count++;
+        } else {
+            count = 0;
+            byteArray[count] = Wire.read();
+        }
+    }     
+    count = 0;
+    this->node_inbox.push_back(String(buf));
 }
 
 void NodeSlave::SendMsgsToNetwork() {
