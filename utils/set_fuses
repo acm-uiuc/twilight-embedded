@@ -2,4 +2,5 @@
 
 /bin/echo "WARNING: USE THIS TOOL WITH CARE, IT CAN BRICK YOUR CHIP"
 read -p "Press enter to continue"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 sudo avrdude -p atmega2560 -C ~/avrdude_gpio.conf -c pi_1 -v -U lfuse:w:0xFF:m
