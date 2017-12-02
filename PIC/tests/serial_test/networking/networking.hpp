@@ -36,12 +36,12 @@ void multicast(String msg) {
 void handle_network_msgs() {
     //Get new messages from other nodes
     if (Serial2.available()) {
-        String msg = Serial1.readString();
+        String msg = Serial2.readString();
         interconnect.inbox.push_back(String(msg + ';' + String(NORTH)));
     }
 
     if (Serial3.available()) {
-        String msg = Serial2.readString();
+        String msg = Serial3.readString();
         interconnect.inbox.push_back(String(msg + ';' + String(SOUTH)));
     }
 
