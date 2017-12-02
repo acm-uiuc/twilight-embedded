@@ -35,7 +35,7 @@ public:
     void setup();
     void UpdateFrame();
     void SetColor(uint8_t r, uint8_t g, uint8_t b);
-    void ApplyCommand();
+    void ApplyCommand(String cmd);
     Adafruit_NeoPixel GetStrip();
 private:
     Adafruit_NeoPixel strip;
@@ -74,9 +74,9 @@ void LEDFrame::SetColor(uint8_t r, uint8_t g, uint8_t b) {
 }
 
 void LEDFrame::ApplyCommand(String cmd) {
-    if (!cmd.StartsWith("LED:")) {
+    if (!cmd.startsWith("LED:")) {
         return; 
-    } else if {
+    } else {
         String cmd_color = cmd.split(':')[1]:
         vector<String> cmd_color_tuple = cmd.split(','):
         this->SetColor(atoi(cmd_color_tuple[1]), atoi(cmd_color_tuple[2]), atoi(cmd_color_tuple[3]))
@@ -96,6 +96,10 @@ void update_frame() {
 
 Adafruit_NeoPixel get_strip() {
     return frame.GetStrip();
+}
+
+void apply_frame_command(String cmd) {
+    frame.ApplyCommand(cmd);
 }
 
 //---------------------------- STANDARD ANIMATIONS -------------------------------//

@@ -1,7 +1,7 @@
 #ifndef NODE_SLAVE
 #define NODE_SLAVE
 
-#include "networking/networking.hpp"
+#include "../networking/networking.hpp"
 #include "../constants/directions.hpp"
 #include "Arduino.h" 
 #include <Wire.h>
@@ -26,11 +26,12 @@ private:
     std::vector<String> node_inbox;          // QUEUE OF MESSAGES FROM THE NODE
     std::vector<String> node_outbox;         // QUEUE OF MESSAGES TO GO TO THE NODE
     std::vector<String> network_outbox;      // QUEUE OF MESSAGES TO GO OUT TO THE NETWORK 
-    std::vector<String> led_cmds;            // QUEUE OF COMMANDS TO RUN ON THE LEDS
+    String led_cmd;                         // QUEUE OF COMMANDS TO RUN ON THE LEDS (RIGHT NOW ITS JUST A SINGLE CMD)
 }
 
 int count = 0;
 
+//Get incomming messages from the Network
 void NodeSlave::GetIncommingNetworkMsgs() {
     this->node_outbox.push_back(recv_msgs());
     return;
@@ -62,17 +63,18 @@ void NodeSlave::SendMsgsToNode() {
         Wire.write(this->node_outbox[i].size());
         Wire.write(this->node_outbox[i])
     }
-    this->node_outbox.clear();
+    this->node_outbox.clear(led_cmd);
 }
 
 void NodeSlave::ApplyNodeLEDCmd() {
-    // SHOULD IT JUST BE THE LATEST COMMAND? 
+    // SHOULD IT JUST BE THE LATEST COMMAND?
+    apply_frame_command()
 }
 
 void NodeSlave::SortMsgsFromNode() {
     for (int i = 0; i < this->node_inbox.size(); i++) {
         if (this->node_inbox[i].startsWith("LED")) {
-            this->led_cmds.push_back(this->node_inbox[i]);
+            this->led_cmd = this->node_inbox[i];
         } else if (this->node_inbox[i].startsWith("LOC")) {
             this->network_outbox.push_back(this->node_inbox[i]);
         } else if (this->node_inbox[i].startsWith("DATA")) {

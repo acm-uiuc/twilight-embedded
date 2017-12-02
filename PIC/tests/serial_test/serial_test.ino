@@ -28,6 +28,8 @@ void setup() {
     ctrlr.add(&DeviceI2C);
 
     frame.SetColor(0,255,0);
+    Serial.begin(9600);
+    Serial.println("STARTING");
 
 }
 

@@ -63,7 +63,7 @@ void send_msg(String msg) {
 }
 
 void send_msgs(std::vector<String> msgs) {
-    interconnect.outbox.push_back(msgs);
+    interconnect.outbox.insert(interconnect.outbox.end(), msgs.begin(), msgs.end());
 }
 
 std::vector<String> recv_msgs() {

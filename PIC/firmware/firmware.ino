@@ -28,7 +28,7 @@ void setup() {
     setup_i2c();
     NodeSlaveThread.enable = true;
     NodeSlaveThread.setInterval(10);
-    NodeSlaveThread.onRun(handle_i2c_msgs);
+    NodeSlaveThread.onRun(run_node_slave);
 
     ThreadCtrlr.add(&LEDs);
     ThreadCtrlr.add(&Network);
@@ -42,6 +42,7 @@ void setup() {
 void loop() {
     ThreadCtrlr.run();
 }
+
 
 
 
