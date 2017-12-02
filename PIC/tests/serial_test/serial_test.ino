@@ -33,6 +33,7 @@ void setup() {
 
 void loop() {
     ctrlr.run();
+    send_msg("BLUE");
     std::vector<String> incomming = recv_msgs();
     for (int i = 0; i < incomming.size(); i++) {
         Serial.println(incomming[i]);
@@ -41,10 +42,6 @@ void loop() {
         }
     }
 }
-
-
-
-
 
 
 
