@@ -27,14 +27,12 @@ void setup() {
     ctrlr.add(&Network);
     ctrlr.add(&DeviceI2C);
 
-    Serial.begin(9600); //DEBUGGING
+    frame.SetColor(255,255,255);
 
 }
 
 void loop() {
     ctrlr.run();
-    frame.SetColor(0,0,255);
-    send_msg("BLUE");
     std::vector<String> incomming = recv_msgs();
     for (int i = 0; i < incomming.size(); i++) {
         Serial.println(incomming[i]);
@@ -43,6 +41,11 @@ void loop() {
         }
     }
 }
+
+
+
+
+
 
 
 
