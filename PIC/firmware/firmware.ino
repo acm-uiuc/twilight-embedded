@@ -25,16 +25,17 @@ void setup() {
     NetworkThread.onRun(handle_network_msgs);
     
     //DeviceI2C
-    setup_i2c();
-    NodeSlaveThread.enable = true;
+    // setup_i2c();
+    NodeSlaveThread.enabled = true;
     NodeSlaveThread.setInterval(10);
     NodeSlaveThread.onRun(run_node_slave);
 
-    ThreadCtrlr.add(&LEDs);
-    ThreadCtrlr.add(&Network);
-    ThreadCtrlr.add(&DeviceI2C);
+    ThreadCtrlr.add(&LEDThread);
+    ThreadCtrlr.add(&NetworkThread);
+    ThreadCtrlr.add(&NodeSlaveThread);
 
-    rainbow(get_strip(), 10000) //Boot Complete
+    uint16_t num = 10000;
+    rainbow(get_strip(), num); //Boot Complete
     Serial.begin(9600); //DEBUGGING
 
 }

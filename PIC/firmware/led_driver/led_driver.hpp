@@ -39,7 +39,7 @@ public:
     Adafruit_NeoPixel GetStrip();
 private:
     Adafruit_NeoPixel strip;
-    Color color; 
+    Color color;
 };
 
 LEDFrame::LEDFrame() {
@@ -74,16 +74,31 @@ void LEDFrame::SetColor(uint8_t r, uint8_t g, uint8_t b) {
 }
 
 void LEDFrame::ApplyCommand(String cmd) {
-    if (!cmd.startsWith("LED:")) {
-        return; 
-    } else {
-        String cmd_color = cmd.split(':')[1]:
-        vector<String> cmd_color_tuple = cmd.split(','):
-        this->SetColor(atoi(cmd_color_tuple[1]), atoi(cmd_color_tuple[2]), atoi(cmd_color_tuple[3]))
+    // Expects string of form "LED:255,255,255"
+
+    // check length
+    if (cmd.length() <= 15) {
+        return;
     }
+
+    // copy into a c string
+    char cmdBuf[16];
+    cmd.toCharArray(cmdBuf, 16);
+
+    // extract channels
+    int colorTuple1, colorTuple2, colorTuple3;
+    int n = sscanf(cmdBuf, "LED:%d,%d,%d", &colorTuple1, &colorTuple2, &colorTuple3);
+
+    // ensure all 3 channels were extracted
+    if (n != 3) {
+        return;
+    }
+
+    // set color
+    this->SetColor(colorTuple1, colorTuple2, colorTuple3);
 }
 
-LEDFrame frame = LEDFrame(); 
+LEDFrame frame = LEDFrame();
 
 void setup_frame() {
     frame.setup();
@@ -112,7 +127,7 @@ void colorWipe(Adafruit_NeoPixel strip, uint32_t c, uint8_t wait) {
         delay(wait);
     }
 }
-  
+
 void rainbow(Adafruit_NeoPixel strip, uint8_t wait) {
     uint16_t i, j;
     for(j=0; j<256; j++) {
@@ -123,11 +138,11 @@ void rainbow(Adafruit_NeoPixel strip, uint8_t wait) {
         delay(wait);
     }
 }
-  
+
 // Slightly different, this makes the rainbow equally distributed throughout
 void rainbowCycle(Adafruit_NeoPixel strip, uint8_t wait) {
     uint16_t i, j;
-  
+
     for(j=0; j<256*5; j++) { // 5 cycles of all colors on wheel
         for(i=0; i< strip.numPixels(); i++) {
             strip.setPixelColor(i, Wheel(strip, ((i * 256 / strip.numPixels()) + j) & 255));
@@ -136,7 +151,7 @@ void rainbowCycle(Adafruit_NeoPixel strip, uint8_t wait) {
         delay(wait);
       }
   }
-  
+
 //Theatre-style crawling lights.
 void theaterChase(Adafruit_NeoPixel strip, uint32_t c, uint8_t wait) {
     for (int j=0; j<10; j++) {  //do 10 cycles of chasing
@@ -144,7 +159,7 @@ void theaterChase(Adafruit_NeoPixel strip, uint32_t c, uint8_t wait) {
             for (uint16_t i=0; i < strip.numPixels(); i=i+3) {
                 strip.setPixelColor(i+q, c);    //turn every third pixel on
             }
-            strip.show();      
+            strip.show();
             delay(wait);
             for (uint16_t i=0; i < strip.numPixels(); i=i+3) {
                 strip.setPixelColor(i+q, 0);        //turn every third pixel off
@@ -152,7 +167,7 @@ void theaterChase(Adafruit_NeoPixel strip, uint32_t c, uint8_t wait) {
         }
     }
 }
-  
+
 //Theatre-style crawling lights with rainbow effect
 void theaterChaseRainbow(Adafruit_NeoPixel strip, uint8_t wait) {
     for (int j=0; j < 256; j++) {     // cycle all 256 colors in the wheel
@@ -161,16 +176,16 @@ void theaterChaseRainbow(Adafruit_NeoPixel strip, uint8_t wait) {
                 strip.setPixelColor(i+q, Wheel(strip, (i+j) % 255));    //turn every third pixel on
             }
             strip.show();
-  
+
             delay(wait);
-  
+
             for (uint16_t i=0; i < strip.numPixels(); i=i+3) {
                 strip.setPixelColor(i+q, 0);        //turn every third pixel off
             }
         }
     }
 }
-  
+
 // Input a value 0 to 255 to get a color value.
 // The colours are a transition r - g - b - back to r.
 uint32_t Wheel(Adafruit_NeoPixel strip, byte WheelPos) {
