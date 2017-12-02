@@ -10,8 +10,8 @@ Thread DeviceI2C = Thread();
 ThreadController ctrlr = ThreadController();
 
 void setup() {
-    
-    //Setup LED Thread 
+
+    //Setup LED Thread
     setup_frame();
     LEDs.enabled = true;
     LEDs.setInterval(10);
@@ -22,13 +22,13 @@ void setup() {
     Network.enabled = true;
     Network.setInterval(10);
     Network.onRun(handle_network_msgs);
-    
+
     ctrlr.add(&LEDs);
     ctrlr.add(&Network);
     ctrlr.add(&DeviceI2C);
 
     frame.SetColor(0,255,0);
-    Serial.begin(9600);
+    Serial.begin(BAUD_RATE);
     Serial.println("STARTING");
 
 }
