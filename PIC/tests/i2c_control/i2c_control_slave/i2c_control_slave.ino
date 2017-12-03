@@ -12,25 +12,21 @@ void setup() {
     Wire.onReceive(receiveEvent);
     Wire.onRequest(sendData);
     
-    frame.setup();
-    frame.SetColor(0, 255, 0);
-    frame.UpdateFrame();
+//    frame.setup();
+//    frame.SetColor(0, 255, 0);
+//    frame.UpdateFrame();
 }
 
 void loop() {
-    if (byteArrayChanged) {
+   /* if (byteArrayChanged) {
         frame.SetColor(100, 12, 80);
         frame.UpdateFrame();
         frame.ApplyCommand(byteArray);
         frame.UpdateFrame();
         byteArrayChanged = 0;
-    }
+    }*/
 }
-
-void receiveEvent(int howMany) {  
-    count = 0;
-    //memset(byteArray, 0, 16);
-    byteArrayChanged = 1;
+void receiveEvent(int howMany) {
     while (Wire.available()) {
         if (count < SIZE) {
             byteArray[count] = Wire.read();
@@ -40,7 +36,22 @@ void receiveEvent(int howMany) {
             byteArray[count] = Wire.read();
         }
     }
+    // print the integer
 }
+//void receiveEvent(int howMany) {  
+//    count = 0;
+//    //memset(byteArray, 0, 16);
+//    byteArrayChanged = 1;
+//    while (Wire.available()) {
+//        if (count < SIZE) {
+//            byteArray[count] = Wire.read();
+//            count++;
+//        } else {
+//            count = 0;
+//            byteArray[count] = Wire.read();
+//        }
+//    }
+//}
 
 void sendData() {
     Wire.write(byteArray);
