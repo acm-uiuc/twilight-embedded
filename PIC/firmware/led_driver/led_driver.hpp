@@ -123,6 +123,7 @@ Adafruit_NeoPixel get_strip() {
 
 void apply_frame_command(String cmd) {
     frame.ApplyCommand(cmd.c_str());
+    frame.UpdateFrame();
 }
 
 //---------------------------- STANDARD ANIMATIONS -------------------------------//
