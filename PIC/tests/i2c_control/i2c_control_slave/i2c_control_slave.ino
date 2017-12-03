@@ -9,11 +9,14 @@ void setup() {
     Wire.begin(0x12);
     Wire.onReceive(receiveEvent);
     Wire.onRequest(sendData);
+
+    frame.SetColor(0, 255, 0);
+    frame.UpdateFrame();
 }
 
 void loop() {
     if (byteArrayChanged) {
-        //apply_frame_command(String(byteArray));
+        apply_frame_command(String(byteArray));
         byteArrayChanged = 0;
     }
 }
