@@ -3,6 +3,9 @@
 
 #define SIZE 64
 
+#define STX 2
+#define ETX 3
+
 int count = 0;
 char byteArray[SIZE];
 int byteArrayChanged = 0;
@@ -30,17 +33,20 @@ void receiveEvent(int howMany) {
 
     while (Wire.available()) {
         int readByte = Wire.read();
-        byteArray[count] = readByte;
 
-        if (readByte == 0) {
+        if (readByte == STX) {
             count = 0;
+            byteArrayChanged = 0;
+        } else if (readByte == ETX) {
+            byteArray[count] = 0;
             byteArrayChanged = 1;
         } else {
+            byteArray[count] = readByte;
             count++;
-            byteArrayChanged = 0;
         }
-
+        
         if (count == SIZE) {
+            memset(byteArray, 0, SIZE);
             count = 0;
         }
     }
