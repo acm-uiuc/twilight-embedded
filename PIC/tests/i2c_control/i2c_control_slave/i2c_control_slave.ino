@@ -27,9 +27,13 @@ void loop() {
 }
 
 void receiveEvent(int howMany) {
-    if (howMany == 15) {
+    for (int i = 0; i < howMany; i++) {
         frame.SetColor(80, 100, 12);
         frame.UpdateFrame();
+        delay(250);
+        frame.SetColor(0, 0, 100);
+        frame.UpdateFrame();
+        delay(250);
     }
   
     count = 0;
