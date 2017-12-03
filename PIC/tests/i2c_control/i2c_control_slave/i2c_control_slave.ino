@@ -2,7 +2,7 @@
 #include <Wire.h>
 
 int count = 0;
-char byteArray[32];
+char byteArray[16];
 
 void setup() {
     Wire.begin(0x12);
@@ -14,7 +14,7 @@ void loop() {}
 
 void receiveEvent(int howMany) {
  while(Wire.available()){
-      if(count < 32){
+      if(count < 16){
         byteArray[count] = Wire.read();
         count++;
       }
@@ -30,3 +30,4 @@ void receiveEvent(int howMany) {
 void sendData() {
     Wire.write(byteArray);
 }
+
