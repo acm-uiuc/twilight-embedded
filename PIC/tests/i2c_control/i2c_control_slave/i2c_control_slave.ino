@@ -37,7 +37,7 @@ void receiveEvent(int howMany) {
             byteArray[count] = Wire.read();
         }
     }
-    count = 0;
+//    count = 0;
 }
 
 
