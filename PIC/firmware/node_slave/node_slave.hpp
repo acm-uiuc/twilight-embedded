@@ -30,6 +30,7 @@ private:
     std::vector<String> node_outbox;         // QUEUE OF MESSAGES TO GO TO THE NODE
     std::vector<String> network_outbox;      // QUEUE OF MESSAGES TO GO OUT TO THE NETWORK
     String led_cmd;                          // QUEUE OF COMMANDS TO RUN ON THE LEDS (RIGHT NOW ITS JUST A SINGLE CMD)
+    uint8_t led_cmd_ready = 0;
 };
 
 
@@ -72,9 +73,6 @@ void NodeSlave::SendMsgsToNetwork() {
 
 void NodeSlave::SendMsgsToNode() {
     //I2C Magic
-    Wire.write(i2c_buffer);
-    return;
-
     if (this->node_outbox.size() == 0) {
         Wire.write("EMPTY");
         return;
@@ -85,7 +83,10 @@ void NodeSlave::SendMsgsToNode() {
 }
 
 void NodeSlave::ApplyNodeLEDCmd() {
-    apply_frame_command(this->led_cmd);
+    if (this->led_cmd_ready) {
+        apply_frame_command(this->led_cmd);
+        led_cmd_ready = 0;
+    }
 }
 
 void NodeSlave::SortMsgsFromNode() {
@@ -93,9 +94,10 @@ void NodeSlave::SortMsgsFromNode() {
     for (int i = 0; i < this->node_inbox.size(); i++) {
         if (this->node_inbox[i].startsWith("LED")) {
             this->led_cmd = this->node_inbox[i];
+            this->led_cmd_ready = 1;
         } else if (this->node_inbox[i].startsWith("LOC")) {
             this->network_outbox.push_back(this->node_inbox[i]);
-        } else if (this->node_inbox[i].startsWith("DATA")) {
+        } else if (this->node_inbox[i].startsWith("COM")) {
             this->network_outbox.push_back(this->node_inbox[i]);
         } else {
             //Unsupported Msg Type
