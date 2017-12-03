@@ -32,8 +32,8 @@ void setup_networking() {
 }
 
 void send_msg(String msg) {
-    //interconnect.outbox.push_back(msg);
-    multicast(msg);
+    interconnect.outbox.push_back(msg);
+    //multicast(msg); // <-- WORKS 
 }
 
 void send_msgs(std::vector<String> msgs) {
