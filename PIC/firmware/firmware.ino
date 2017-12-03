@@ -20,7 +20,8 @@ void setup() {
 void loop() {
     run_node_slave();
     handle_network_msgs();
-    multicast(String("HELLO"));
+    send_msg(String("HELLO"));
 }
+
 
 

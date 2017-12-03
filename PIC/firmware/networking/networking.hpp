@@ -14,9 +14,9 @@ NetworkExchange interconnect = NetworkExchange();
 
 ////////////////////// INTERFACE ///////////////////////
 void setup_networking() {
-    Serial.begin(BAUDRATE);  //WESTBOUND
-    Serial1.begin(BAUDRATE); //EASTBOUND
-    Serial2.begin(BAUDRATE); //NORTHBOUND
+    //Serial.begin(BAUDRATE);  //WESTBOUND
+    //Serial1.begin(BAUDRATE); //EASTBOUND
+    //Serial2.begin(BAUDRATE); //NORTHBOUND
     Serial3.begin(BAUDRATE); //SOUTHBOUND
 }
 
@@ -36,15 +36,15 @@ std::vector<String> recv_msgs() {
 ////////////////////////////////////////////////////////
 
 void multicast(String msg) {
-    Serial.print(msg);
-    Serial1.print(msg);
-    Serial2.print(msg);
+    //Serial.print(msg);
+    //Serial1.print(msg);
+    //Serial2.print(msg);
     Serial3.print(msg);
 }
 
 void handle_network_msgs() {
     // Get new messages from other nodes
-    if (Serial.available()) {
+    /*if (Serial.available()) {
         String msg = Serial.readString();
         interconnect.inbox.push_back(String(msg + ';' + String(WEST)));
     }
@@ -57,7 +57,7 @@ void handle_network_msgs() {
     if (Serial2.available()) {
         String msg = Serial2.readString();
         interconnect.inbox.push_back(String(msg + ';' + String(NORTH)));
-    }
+    }*/
 
     if (Serial3.available()) {
         String msg = Serial3.readString();
@@ -65,10 +65,11 @@ void handle_network_msgs() {
     }
 
     // Send messages in outbox
-    for (auto &msg: interconnect.outbox) {
+    /*for (auto &msg: interconnect.outbox) {
         multicast(msg);
     }
     interconnect.outbox.clear();
+    */
 }
 
 #endif //NETWORKING_H
