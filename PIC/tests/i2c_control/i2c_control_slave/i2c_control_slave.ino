@@ -1,8 +1,9 @@
 #include "led_driver.hpp"
 #include <Wire.h>
 
+#define SIZE 16
 int count = 0;
-char byteArray[16];
+char byteArray[SIZE];
 int byteArrayChanged = 0;
 
 void setup() {
@@ -18,33 +19,23 @@ void setup() {
 
 void loop() {
     if (byteArrayChanged) {
-        //frame.SetColor(100, 12, 80);
+        frame.SetColor(100, 12, 80);
         //frame.UpdateFrame();
-        frame.ApplyCommand(byteArray);
+        //frame.ApplyCommand(byteArray);
         frame.UpdateFrame();
         byteArrayChanged = 0;
     }
 }
 
-void receiveEvent(int howMany) {
-    for (int i = 0; i < howMany; i++) {
-        frame.SetColor(80, 100, 12);
-        frame.UpdateFrame();
-        delay(1000);
-        frame.SetColor(0, 0, 100);
-        frame.UpdateFrame();
-        delay(1000);
-    }
-  
+void receiveEvent(int howMany) {  
     count = 0;
-    memset(byteArray, 0, 16);
+    //memset(byteArray, 0, 16);
     byteArrayChanged = 1;
-    while(Wire.available()) {
-        if (count < 16) {
+    while (Wire.available()) {
+        if (count < SIZE) {
             byteArray[count] = Wire.read();
             count++;
         } else {
-            break;
             count = 0;
             byteArray[count] = Wire.read();
         }
