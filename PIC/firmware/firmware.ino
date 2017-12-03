@@ -25,7 +25,7 @@ void setup() {
     NetworkThread.onRun(handle_network_msgs);
     
     //DeviceI2C
-    // setup_i2c();
+    setup_i2c();
     NodeSlaveThread.enabled = true;
     NodeSlaveThread.setInterval(10);
     NodeSlaveThread.onRun(run_node_slave);

@@ -1,10 +1,10 @@
-#ifndef NETWORKING_H
-#define NETWORKING_H
+#ifndef NETWORKING_HPP
+#define NETWORKING_HPP
 
 #include "Arduino.h" 
 #include <ArduinoSTL.h>
 //#include "protocols/protocols.hpp"
-#include "../constants/directions.hpp"
+#include "../constants/constants.hpp"
 
 
 
@@ -22,30 +22,35 @@ typedef struct NetworkExchange_struct {
 NetworkExchange interconnect = NetworkExchange();
 
 void setup_networking() {
-    Serial.begin(9600); //DEBUGGING
-    Serial1.begin(9600); //NORTHBOUND
-    Serial2.begin(9600); //SOUTHBOUND
+    Serial.begin(BAUDRATE);  //WESTBOUND
+    Serial1.begin(BAUDRATE); //EASTBOUND
+    Serial2.begin(BAUDRATE); //NORTHBOUND
+    Serial3.begin(BAUDRATE); //SOUTHBOUND
 }
 
 void multicast(String msg) {
-    Serial.println(String(msg + ';' + String(SELF)));
+    Serial.print(msg);
     Serial1.print(msg);
     Serial2.print(msg);
+    Serial3.print(msg);
 }
 
 void handle_network_msgs() {
     //Get new messages from other nodes
-    Serial.println("Checking for messages");
+    if (Serial.available()) {
+        String msg = Serial.readString();
+        interconnect.inbox.push_back(String(msg + ';' + String(WEST)));
+    }
     if (Serial1.available()) {
-        Serial.println("Looking to Read from NORTHBOUND Serial");
         String msg = Serial1.readString();
-        Serial.println(String(msg + ';' + String(NORTH)));
-        interconnect.inbox.push_back(String(msg + ';' + String(NORTH)));
+        interconnect.inbox.push_back(String(msg + ';' + String(EAST)));
     }
     if (Serial2.available()) {
-        Serial.println("Looking to Read from SOUTHBOUND Serial");
         String msg = Serial2.readString();
-        Serial.println(String(msg + ';' + String(SOUTH)));
+        interconnect.inbox.push_back(String(msg + ';' + String(NORTH)));
+    }
+    if (Serial3.available()) {
+        String msg = Serial3.readString();
         interconnect.inbox.push_back(String(msg + ';' + String(SOUTH)));
     }
 
@@ -69,7 +74,6 @@ void send_msgs(std::vector<String> msgs) {
 std::vector<String> recv_msgs() {
     std::vector<String> msgs = interconnect.inbox;
     interconnect.inbox.clear();
-    Serial.println(interconnect.inbox.size());
     return msgs;
 }
 

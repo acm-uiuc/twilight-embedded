@@ -1,5 +1,5 @@
-#ifndef NODE_SLAVE
-#define NODE_SLAVE
+#ifndef NODE_SLAVE_HPP
+#define NODE_SLAVE_HPP
 
 #include "../networking/networking.hpp"
 #include "../constants/directions.hpp"
@@ -10,8 +10,6 @@
 // The Node Slave instance controls execution of operations on the
 // controller. Assigns the box color and sends messages.
 //////////////////////////////////////////////////////////////////////
-
-void run_node_slave();
 
 class NodeSlave {
 public:
@@ -59,16 +57,14 @@ void NodeSlave::SendMsgsToNetwork() {
 }
 
 void NodeSlave::SendMsgsToNode() {
-    //I2C Magic
-    for (int i = 0; i < this->node_outbox.size(); i++) {
-        uint16_t len = this->node_outbox[i].length();
-        char buf[len];
-        this->node_outbox[i].toCharArray(buf, len);
-
-        Wire.write(this->node_outbox[i].length());
-        Wire.write(buf, len);
+    //I2C Magic 
+    if (this->node_outbox.size() == 0) {
+        Wire.write("EMPTY");
+        return;
     }
-    this->node_outbox.clear();
+
+    Wire.write(this->node_outbox[0].c_str(), this->node_outbox[0].length());
+    this->node_outbox.erase(this->node_outbox.begin());
 }
 
 void NodeSlave::ApplyNodeLEDCmd() {
@@ -93,13 +89,25 @@ void NodeSlave::SortMsgsFromNode() {
 
 NodeSlave node_ctrlr = NodeSlave();
 
-void run_node_slave() {
+void receive_msgs_from_node() {
     node_ctrlr.GetIncommingNodeMsgs();
+}
+
+void send_msgs_to_node() {
+    node_ctrlr.SendMsgsToNode();
+}
+
+void setup_i2c() {
+    Wire.begin(SLAVE_ADDR);
+    Wire.onReceive(receive_msgs_from_node);
+    Wire.onRequest(send_msgs_to_node);
+}
+
+void run_node_slave() {
     node_ctrlr.SortMsgsFromNode();
     node_ctrlr.GetIncommingNetworkMsgs();
     node_ctrlr.SendMsgsToNetwork();
     node_ctrlr.ApplyNodeLEDCmd();
-    node_ctrlr.SendMsgsToNode();
 }
 
-#endif //NODE_SLAVE
+#endif //NODE_SLAVE_HPP
