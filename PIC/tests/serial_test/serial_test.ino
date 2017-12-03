@@ -4,10 +4,12 @@
 #include "networking/networking.hpp"
 #include "led_driver/led_driver.hpp"
 
+
 Thread LEDs = Thread();
 Thread Network = Thread();
 Thread DeviceI2C = Thread();
 ThreadController ctrlr = ThreadController();
+
 
 void setup() {
 

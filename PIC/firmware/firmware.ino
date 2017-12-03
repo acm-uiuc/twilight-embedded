@@ -10,11 +10,8 @@ Thread NetworkThread = Thread();
 Thread NodeSlaveThread = Thread();
 ThreadController ThreadCtrlr = ThreadController();
 
-uint16_t num = 20;
-
 void setup() {
-    
-    //Setup LED Thread 
+    //Setup LED Thread
     setup_frame();
     LEDThread.enabled = true;
     LEDThread.setInterval(10);
@@ -25,7 +22,7 @@ void setup() {
     NetworkThread.enabled = true;
     NetworkThread.setInterval(10);
     NetworkThread.onRun(handle_network_msgs);
-    
+
     //DeviceI2C
     setup_i2c();
     NodeSlaveThread.enabled = true;
@@ -36,12 +33,12 @@ void setup() {
     ThreadCtrlr.add(&NetworkThread);
     ThreadCtrlr.add(&NodeSlaveThread);
 
-    rainbow(get_strip(), num); //Boot Complete
+    Serial.println("Starting");
+    frame.SetColor(122,12,80);
 }
 
 void loop() {
     ThreadCtrlr.run();
-    rainbowCycle(get_strip(), num); //Boot Complete
 }
 
 

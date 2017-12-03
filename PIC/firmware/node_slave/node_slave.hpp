@@ -24,7 +24,7 @@ private:
     std::vector<String> node_inbox;          // QUEUE OF MESSAGES FROM THE NODE
     std::vector<String> node_outbox;         // QUEUE OF MESSAGES TO GO TO THE NODE
     std::vector<String> network_outbox;      // QUEUE OF MESSAGES TO GO OUT TO THE NETWORK
-    String led_cmd;                         // QUEUE OF COMMANDS TO RUN ON THE LEDS (RIGHT NOW ITS JUST A SINGLE CMD)
+    String led_cmd;                          // QUEUE OF COMMANDS TO RUN ON THE LEDS (RIGHT NOW ITS JUST A SINGLE CMD)
 };
 
 int count = 0;
@@ -33,14 +33,15 @@ int count = 0;
 void NodeSlave::GetIncommingNetworkMsgs() {
     std::vector<String> msgs = recv_msgs();
     node_outbox.insert(node_outbox.end(), msgs.begin(), msgs.end());
-    // this->node_outbox.push_back(recv_msgs());
 }
 
 void NodeSlave::GetIncommingNodeMsgs() {
+    Serial.println("GetIncommingNodeMsgs");
+
     //I2C Magic
     char buf[32];
-    while(Wire.available()) {
-        if(count < 32){
+    while (Wire.available()) {
+        if (count < 32) {
             buf[count] = Wire.read();
             count++;
         } else {
@@ -49,6 +50,7 @@ void NodeSlave::GetIncommingNodeMsgs() {
         }
     }
     count = 0;
+    Serial.println(String(buf));
     this->node_inbox.push_back(String(buf));
 }
 
@@ -57,7 +59,7 @@ void NodeSlave::SendMsgsToNetwork() {
 }
 
 void NodeSlave::SendMsgsToNode() {
-    //I2C Magic 
+    //I2C Magic
     if (this->node_outbox.size() == 0) {
         Wire.write("EMPTY");
         return;
@@ -72,6 +74,7 @@ void NodeSlave::ApplyNodeLEDCmd() {
 }
 
 void NodeSlave::SortMsgsFromNode() {
+
     for (int i = 0; i < this->node_inbox.size(); i++) {
         if (this->node_inbox[i].startsWith("LED")) {
             this->led_cmd = this->node_inbox[i];
@@ -89,7 +92,9 @@ void NodeSlave::SortMsgsFromNode() {
 
 NodeSlave node_ctrlr = NodeSlave();
 
-void receive_msgs_from_node() {
+void receive_msgs_from_node(int numBytes) {
+    Serial.println("receive_msgs_from_node");
+    (void)numBytes;
     node_ctrlr.GetIncommingNodeMsgs();
 }
 
@@ -98,6 +103,7 @@ void send_msgs_to_node() {
 }
 
 void setup_i2c() {
+    Serial.println("setup_i2c");
     Wire.begin(SLAVE_ADDR);
     Wire.onReceive(receive_msgs_from_node);
     Wire.onRequest(send_msgs_to_node);

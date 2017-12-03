@@ -26,6 +26,10 @@ typedef struct color_struct {
     uint8_t b;
 } Color;
 
+inline bool operator == (const Color& lhs, const Color& rhs) {
+    return lhs.r == rhs.r && lhs.g == rhs.g && lhs.b == rhs.b;
+}
+
 class LEDFrame {
 public:
     LEDFrame();
@@ -37,12 +41,12 @@ public:
 private:
     Adafruit_NeoPixel strip;
     Color color;
+    Color lastColor;
 };
 
 LEDFrame::LEDFrame() {
    this->strip = Adafruit_NeoPixel(STRIP_LENGTH, LED_PIN, NEO_GRB + NEO_KHZ800);
    this->color = Color{255,255,255};
-   return;
 }
 
 Adafruit_NeoPixel LEDFrame::GetStrip() {
@@ -52,22 +56,25 @@ Adafruit_NeoPixel LEDFrame::GetStrip() {
 void LEDFrame::setup() {
     this->strip.begin();
     this->strip.show();
-    return;
 }
 
 void LEDFrame::UpdateFrame() {
+    if (this->color == this->lastColor) {
+        return;
+    }
+
     for(uint16_t i=0; i < this->strip.numPixels(); i++) {
         strip.setPixelColor(i, this->strip.Color(this->color.r, this->color.b, this->color.g));
         strip.show();
     }
-    return;
+
+    this->lastColor = this->color;
 }
 
 void LEDFrame::SetColor(uint8_t r, uint8_t g, uint8_t b) {
     this->color.r = r;
     this->color.g = g;
     this->color.b = b;
-    return;
 }
 
 void LEDFrame::ApplyCommand(String cmd) {
