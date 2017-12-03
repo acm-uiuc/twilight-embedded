@@ -20,8 +20,8 @@ void setup() {
 void loop() {
     if (byteArrayChanged) {
         frame.SetColor(100, 12, 80);
-        //frame.UpdateFrame();
-        //frame.ApplyCommand(byteArray);
+        frame.UpdateFrame();
+        frame.ApplyCommand(byteArray);
         frame.UpdateFrame();
         byteArrayChanged = 0;
     }

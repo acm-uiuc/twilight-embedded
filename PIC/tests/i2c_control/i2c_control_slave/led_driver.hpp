@@ -82,7 +82,7 @@ void LEDFrame::SetColor(uint8_t r, uint8_t g, uint8_t b) {
 
 void LEDFrame::ApplyCommand(String cmd) {
     // Expects string of form "LED:255,255,255"
-
+    SetColor(125, 255, 125);
 
     // check length
     if (cmd.length() <= 15) {
