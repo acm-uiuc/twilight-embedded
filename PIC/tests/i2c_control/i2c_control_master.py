@@ -1,9 +1,20 @@
 import smbus
+import argparse
+
+PARSER = argparse.ArgumentParser(description=None)
+
+PARSER.add_argument('r', type=str)
+PARSER.add_argument('g', type=str)
+PARSER.add_argument('b', type=str)
+
+ARGS = PARSER.parse_args()
+
+
 
 i2c = smbus.SMBus(1)
 slave = 0x12
 
-CMD = "LED:255,0,255"
+CMD = "LED:"+ARGS[0]+ARGS[1]+ARGS[2]
 
 for b in CMD:
     i2c.write_byte(slave, ord(b))
