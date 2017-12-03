@@ -1,9 +1,11 @@
 #include <Wire.h>
 
 #define PIN 9
+#define SIZE 16
 String data = "";
 int count = 0;
-char byteArray[4];
+
+char byteArray[SIZE];
 
 void setup() {
     Wire.begin(0x12);
@@ -16,7 +18,7 @@ void loop() { }
 
 void receiveEvent(int howMany) {
     while (Wire.available()) {
-        if (count < 4) {
+        if (count < SIZE) {
             byteArray[count] = Wire.read();
             count++;
         } else {
