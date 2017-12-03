@@ -27,7 +27,7 @@ void loop() {
 }
 
 void receiveEvent(int howMany) {
-    if (howMany == 16) {
+    if (howMany == 15) {
         frame.SetColor(80, 100, 12);
         frame.UpdateFrame();
     }
