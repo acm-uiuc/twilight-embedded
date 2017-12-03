@@ -13,7 +13,7 @@ void setup() {
 
 void loop() {
     if (byteArrayChanged) {
-        apply_frame_command(String(byteArray));
+        //apply_frame_command(String(byteArray));
         byteArrayChanged = 0;
     }
 }
