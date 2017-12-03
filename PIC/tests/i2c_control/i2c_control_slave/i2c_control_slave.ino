@@ -13,7 +13,7 @@ void setup() {
     Wire.onRequest(sendData);
     
     frame.setup();
-    frame.SetColor(0, 128, 0);
+    frame.SetColor(128, 128, 0);
     frame.UpdateFrame();
 }
 
