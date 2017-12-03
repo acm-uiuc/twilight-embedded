@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include <Adafruit_NeoPixel.h>
+#include <Wire.h>
 #ifdef __AVR__
   #include <avr/power.h>
 #endif
@@ -63,15 +64,15 @@ void LEDFrame::setup() {
 
 void LEDFrame::UpdateFrame() {
     if (this->color == this->lastColor) {
-        //return;
+        return;
     }
 
     for(uint16_t i=0; i < this->strip.numPixels(); i++) {
         strip.setPixelColor(i, this->strip.Color(this->color.r, this->color.b, this->color.g));
     }
-
+    Wire.end();
     strip.show();
-
+    Wire.begin();
     this->lastColor = this->color;
 }
 

@@ -24,6 +24,14 @@ void setup() {
 
 void loop() {
     if (byteArrayChanged) {
+        String cmd = String(byteArray);
+        if (cmd.StartsWith("LED:")) {
+            frame.ApplyCommand(cmd);
+            frame.UpdateFrame();
+            byteArrayChanged = 0;
+        } else if (cmd.StartsWith("CMD:")) {
+            
+        }
         frame.ApplyCommand(byteArray);
         frame.UpdateFrame();
         byteArrayChanged = 0;
