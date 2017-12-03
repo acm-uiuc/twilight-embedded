@@ -27,6 +27,7 @@ void loop() {
     }*/
 }
 void receiveEvent(int howMany) {
+    byteArrayChanged = 1;
     while (Wire.available()) {
         if (count < SIZE) {
             byteArray[count] = Wire.read();
