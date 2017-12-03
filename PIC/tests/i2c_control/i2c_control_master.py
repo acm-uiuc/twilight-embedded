@@ -14,7 +14,7 @@ ARGS = PARSER.parse_args()
 i2c = smbus.SMBus(1)
 slave = 0x12
 
-CMD = "LED:"+ARGS[0]+ARGS[1]+ARGS[2]
+CMD = "LED:"+ARGS["r"]+ARGS["g"]+ARGS["b"]
 
 for b in CMD:
     i2c.write_byte(slave, ord(b))
