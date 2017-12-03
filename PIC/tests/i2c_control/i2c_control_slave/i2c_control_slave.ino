@@ -30,10 +30,10 @@ void receiveEvent(int howMany) {
     for (int i = 0; i < howMany; i++) {
         frame.SetColor(80, 100, 12);
         frame.UpdateFrame();
-        delay(250);
+        delay(1000);
         frame.SetColor(0, 0, 100);
         frame.UpdateFrame();
-        delay(250);
+        delay(1000);
     }
   
     count = 0;
