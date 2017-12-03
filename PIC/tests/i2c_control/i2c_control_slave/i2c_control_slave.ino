@@ -3,6 +3,7 @@
 
 int count = 0;
 char byteArray[16];
+int byteArrayChanged = 0;
 
 void setup() {
     Wire.begin(0x12);
@@ -10,10 +11,15 @@ void setup() {
     Wire.onRequest(sendData);
 }
 
-void loop() {}
+void loop() {
+    if (byteArrayChanged) {
+        apply_frame_command(String(byteArray));
+        byteArrayChanged = 0;
+    }
+}
 
 void receiveEvent(int howMany) {
- while(Wire.available()){
+ while(Wire.available()) {
       if(count < 16){
         byteArray[count] = Wire.read();
         count++;
@@ -24,7 +30,7 @@ void receiveEvent(int howMany) {
       }
     }
     count = 0;        // print the integer
-    apply_frame_command(String(byteArray));
+    byteArrayChanged = 1;
 }
 
 void sendData() {
