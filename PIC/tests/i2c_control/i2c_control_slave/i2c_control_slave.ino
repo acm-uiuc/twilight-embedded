@@ -25,6 +25,8 @@ void loop() {
     }
 }
 void receiveEvent(int howMany) {
+    count = 0;
+    memset(byteArray, 0, SIZE);
     byteArrayChanged = 1;
     while (Wire.available()) {
         if (count < SIZE) {
@@ -37,20 +39,7 @@ void receiveEvent(int howMany) {
     }
     // print the integer
 }
-//void receiveEvent(int howMany) {  
-//    count = 0;
-//    //memset(byteArray, 0, 16);
-//    byteArrayChanged = 1;
-//    while (Wire.available()) {
-//        if (count < SIZE) {
-//            byteArray[count] = Wire.read();
-//            count++;
-//        } else {
-//            count = 0;
-//            byteArray[count] = Wire.read();
-//        }
-//    }
-//}
+
 
 void sendData() {
     Wire.write(byteArray);
