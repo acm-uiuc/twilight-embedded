@@ -68,8 +68,9 @@ void LEDFrame::UpdateFrame() {
 
     for(uint16_t i=0; i < this->strip.numPixels(); i++) {
         strip.setPixelColor(i, this->strip.Color(this->color.r, this->color.b, this->color.g));
-        strip.show();
     }
+
+    strip.show();
 
     this->lastColor = this->color;
 }
