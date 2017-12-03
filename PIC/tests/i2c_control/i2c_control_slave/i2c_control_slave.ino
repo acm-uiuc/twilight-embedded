@@ -1,16 +1,16 @@
 #include "led_driver.hpp"
 #include <Wire.h>
 
-#define SIZE 48
+#define SIZE 64
+#define EOT  4
 int count = 0;
 char byteArray[SIZE];
 char outputStr[SIZE];
 int byteArrayChanged = 0;
-int originator = 0;
 
 void setup() {
     memset(byteArray, 0, SIZE);
-
+  
     Wire.begin(0x12);
     Wire.onReceive(receiveEvent);
     Wire.onRequest(sendData);
@@ -28,20 +28,24 @@ void loop() {
     }
 }
 void receiveEvent(int howMany) {
-    
-    byteArrayChanged = 1;
+
     while (Wire.available()) {
-        if (count < SIZE) {
-            byteArray[count] = Wire.read();
-            count++;
-        } else {
-            break;
+        int readByte = Wire.read();
+        if (readByte == EOT) {
+            byteArray[count] = 0;
             count = 0;
-            byteArray[count] = Wire.read();
+            byteArrayChanged = 1;
+            break;
+        }
+
+        byteArrayChanged = 0;
+        byteArray[count] = readByte;
+        count++;
+
+        if (count == SIZE) {
+            count = 0;
         }
     }
-    
-    count = 0;
 }
 
 
