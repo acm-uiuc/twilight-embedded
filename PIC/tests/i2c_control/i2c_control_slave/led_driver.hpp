@@ -39,7 +39,7 @@ public:
     void setup();
     void UpdateFrame();
     void SetColor(uint8_t r, uint8_t g, uint8_t b);
-    void ApplyCommand(String cmd);
+    void ApplyCommand(const char* cmd);
     Adafruit_NeoPixel GetStrip();
 private:
     Adafruit_NeoPixel strip;
@@ -80,22 +80,17 @@ void LEDFrame::SetColor(uint8_t r, uint8_t g, uint8_t b) {
     this->color.b = b;
 }
 
-void LEDFrame::ApplyCommand(String cmd) {
+void LEDFrame::ApplyCommand(const char* cmd) {
     // Expects string of form "LED:255,255,255"
-    SetColor(125, 255, 125);
 
     // check length
-    if (cmd.length() <= 15) {
+    if (strlen(cmd) > 15) {
         return;
     }
 
-    // copy into a c string
-    char cmdBuf[16];
-    cmd.toCharArray(cmdBuf, 16);
-
     // extract channels
     int colorTuple1, colorTuple2, colorTuple3;
-    int n = sscanf(cmdBuf, "LED:%d,%d,%d", &colorTuple1, &colorTuple2, &colorTuple3);
+    int n = sscanf(cmd, "LED:%d,%d,%d", &colorTuple1, &colorTuple2, &colorTuple3);
 
     // ensure all 3 channels were extracted
     if (n != 3) {
@@ -105,6 +100,7 @@ void LEDFrame::ApplyCommand(String cmd) {
     // set color
     this->SetColor(colorTuple1, colorTuple2, colorTuple3);
 }
+
 
 LEDFrame frame = LEDFrame();
 
@@ -122,7 +118,7 @@ Adafruit_NeoPixel get_strip() {
 }
 
 void apply_frame_command(String cmd) {
-    frame.ApplyCommand(cmd);
+    frame.ApplyCommand(cmd.c_str());
 }
 
 //---------------------------- STANDARD ANIMATIONS -------------------------------//
