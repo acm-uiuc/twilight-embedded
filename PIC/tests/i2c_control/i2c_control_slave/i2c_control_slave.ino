@@ -23,6 +23,8 @@ void loop() {
 }
 
 void receiveEvent(int howMany) {
+      frame.SetColor(255, 0, 0);
+    frame.UpdateFrame();
  while(Wire.available()) {
       if(count < 16){
         byteArray[count] = Wire.read();
