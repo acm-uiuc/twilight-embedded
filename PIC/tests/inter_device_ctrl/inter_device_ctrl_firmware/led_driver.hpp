@@ -63,7 +63,7 @@ void LEDFrame::setup() {
 
 void LEDFrame::UpdateFrame() {
     if (this->color == this->lastColor) {
-        //return;
+        return;
     }
 
     for(uint16_t i=0; i < this->strip.numPixels(); i++) {
