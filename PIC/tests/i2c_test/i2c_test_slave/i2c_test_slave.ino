@@ -12,24 +12,21 @@ void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
 }
 
-void loop() {}
+void loop() { }
 
 void receiveEvent(int howMany) {
- while(Wire.available()){
-      if(count < 4){
-        byteArray[count] = Wire.read();
-        count++;
-      }
-      else{
-        count = 0;
-        byteArray[count] = Wire.read();
-      }
-    }        // print the integer
+    while (Wire.available()) {
+        if (count < 4) {
+            byteArray[count] = Wire.read();
+            count++;
+        } else {
+            count = 0;
+            byteArray[count] = Wire.read();
+        }
+    }
+    // print the integer
 }
 
 void sendData() {
     Wire.write(byteArray);
 }
-
-
-

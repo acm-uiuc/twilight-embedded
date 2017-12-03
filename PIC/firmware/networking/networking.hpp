@@ -35,12 +35,6 @@ std::vector<String> recv_msgs() {
 }
 ////////////////////////////////////////////////////////
 
-void setup_networking();
-void handle_network_msgs();
-void multicast(String msg);
-
-
-
 void multicast(String msg) {
     Serial.print(msg);
     Serial1.print(msg);
