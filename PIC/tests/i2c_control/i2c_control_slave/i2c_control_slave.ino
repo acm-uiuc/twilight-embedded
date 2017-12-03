@@ -29,6 +29,7 @@ void loop() {
         byteArrayChanged = 0;
     }
 }
+
 void receiveEvent(int howMany) {
 
     while (Wire.available()) {
