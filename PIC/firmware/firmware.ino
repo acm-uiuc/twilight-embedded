@@ -10,6 +10,8 @@ Thread NetworkThread = Thread();
 Thread NodeSlaveThread = Thread();
 ThreadController ThreadCtrlr = ThreadController();
 
+uint16_t num = 20;
+
 void setup() {
     
     //Setup LED Thread 
@@ -34,13 +36,16 @@ void setup() {
     ThreadCtrlr.add(&NetworkThread);
     ThreadCtrlr.add(&NodeSlaveThread);
 
-    uint16_t num = 10000;
     rainbow(get_strip(), num); //Boot Complete
 }
 
 void loop() {
     ThreadCtrlr.run();
+    rainbowCycle(get_strip(), num); //Boot Complete
 }
+
+
+
 
 
 

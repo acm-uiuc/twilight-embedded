@@ -2,7 +2,7 @@
 #define NODE_SLAVE_HPP
 
 #include "../networking/networking.hpp"
-#include "../constants/directions.hpp"
+#include "../constants/constants.hpp"
 #include "Arduino.h"
 #include <Wire.h>
 

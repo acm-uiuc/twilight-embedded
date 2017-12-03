@@ -8,7 +8,8 @@
 #define WEST 0
 
 #define BAUDRATE 9600
-
 #define SLAVE_ADDR 0x12
+#define LED_PIN 8
+#define STRIP_LENGTH 35
 
 #endif //DCONSTANTS_HPP
