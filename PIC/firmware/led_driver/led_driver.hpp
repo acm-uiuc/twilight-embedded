@@ -86,6 +86,7 @@ void LEDFrame::ApplyCommand(const char* cmd) {
 
     // check length
     if (strlen(cmd) > 15) {
+        SetColor(255, 0, 0);
         return;
     }
 
@@ -95,6 +96,7 @@ void LEDFrame::ApplyCommand(const char* cmd) {
 
     // ensure all 3 channels were extracted
     if (n != 3) {
+        SetColor(0, 0, 255);
         return;
     }
 

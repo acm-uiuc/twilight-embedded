@@ -33,8 +33,9 @@ void setup() {
     ThreadCtrlr.add(&NetworkThread);
     ThreadCtrlr.add(&NodeSlaveThread);
 
-    Serial.println("Starting");
+    // Serial.println("Starting");
     frame.SetColor(122,12,80);
+    frame.UpdateFrame();
 }
 
 void loop() {
