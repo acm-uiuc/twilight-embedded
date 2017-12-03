@@ -1,12 +1,13 @@
 #include "led_driver.hpp"
 #include <Wire.h>
 
-#define SIZE 16
+#define SIZE 48
 int count = 0;
 char byteArray[SIZE];
 int byteArrayChanged = 0;
 
 void setup() {
+    memset(byteArray, 0, SIZE);
 
     Wire.begin(0x12);
     Wire.onReceive(receiveEvent);
@@ -25,8 +26,7 @@ void loop() {
     }
 }
 void receiveEvent(int howMany) {
-    count = 0;
-    memset(byteArray, 0, SIZE);
+    
     byteArrayChanged = 1;
     while (Wire.available()) {
         if (count < SIZE) {
@@ -37,7 +37,7 @@ void receiveEvent(int howMany) {
             byteArray[count] = Wire.read();
         }
     }
-    // print the integer
+    count = 0;
 }
 
 
