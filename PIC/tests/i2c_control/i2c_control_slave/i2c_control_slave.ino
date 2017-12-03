@@ -9,7 +9,8 @@ void setup() {
     Wire.begin(0x12);
     Wire.onReceive(receiveEvent);
     Wire.onRequest(sendData);
-
+    
+    frame.setup();
     frame.SetColor(0, 255, 0);
     frame.UpdateFrame();
 }
