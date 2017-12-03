@@ -72,6 +72,9 @@ void NodeSlave::SendMsgsToNetwork() {
 }
 
 void NodeSlave::SendMsgsToNode() {
+    Wire.write(i2c_buffer);
+    return;
+
     //I2C Magic
     if (this->node_outbox.size() == 0) {
         Wire.write("EMPTY");
