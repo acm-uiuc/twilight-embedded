@@ -36,13 +36,12 @@ void setup() {
 
     uint16_t num = 10000;
     rainbow(get_strip(), num); //Boot Complete
-    Serial.begin(9600); //DEBUGGING
-
 }
 
 void loop() {
     ThreadCtrlr.run();
 }
+
 
 
 
