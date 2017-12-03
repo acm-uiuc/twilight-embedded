@@ -10,7 +10,7 @@ void setup() {
     setup_networking();
 
     //DeviceI2C
-    setup_i2c();
+    //setup_i2c();
 
     // Serial.println("Starting");
     frame.SetColor(122,12,80);
