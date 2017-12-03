@@ -4,7 +4,9 @@
 #define SIZE 48
 int count = 0;
 char byteArray[SIZE];
+char outputStr[SIZE];
 int byteArrayChanged = 0;
+int originator = 0;
 
 void setup() {
     memset(byteArray, 0, SIZE);
@@ -26,7 +28,7 @@ void loop() {
     }
 }
 void receiveEvent(int howMany) {
-    
+
     byteArrayChanged = 1;
     while (Wire.available()) {
         if (count < SIZE) {
@@ -37,7 +39,8 @@ void receiveEvent(int howMany) {
             byteArray[count] = Wire.read();
         }
     }
-//    count = 0;
+    
+    count = 0;
 }
 
 
