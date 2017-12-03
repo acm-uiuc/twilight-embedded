@@ -18,8 +18,8 @@ void setup() {
 
 void loop() {
     if (byteArrayChanged) {
-        frame.SetColor(100, 12, 80);
-        frame.UpdateFrame();
+        //frame.SetColor(100, 12, 80);
+        //frame.UpdateFrame();
         frame.ApplyCommand(byteArray);
         frame.UpdateFrame();
         byteArrayChanged = 0;
@@ -27,6 +27,11 @@ void loop() {
 }
 
 void receiveEvent(int howMany) {
+    if (howMany == 16) {
+        frame.SetColor(80, 100, 12);
+        frame.UpdateFrame();
+    }
+  
     count = 0;
     memset(byteArray, 0, 16);
     byteArrayChanged = 1;
