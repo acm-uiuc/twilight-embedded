@@ -16,11 +16,10 @@ slave = 0x12
 
 CMD = ARGS.cmd
 
-def send_str(str): 
-    i2c.write_byte(slave, 2)
-    for b in str:
-        i2c.write_byte(slave, ord(b))
-    i2c.write_byte(slave, 3)
+def send_str(str):
+    data = tuple(map(lambda x: ord(x), str)) + (3,)
+    i2c.write_i2c_block_data(slave, 2, list(data))
+
 
 def read(): 
     try:
