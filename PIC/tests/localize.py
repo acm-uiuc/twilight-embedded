@@ -10,12 +10,6 @@ PARSER.add_argument("cmd", type=str)
 
 ARGS = PARSER.parse_args()
 
-    WEST  = 0
-    EAST  = 1
-    NORTH = 2
-    SOUTH = 3
-
-
 i2c = smbus.SMBus(1)
 slave = 0x12
 
