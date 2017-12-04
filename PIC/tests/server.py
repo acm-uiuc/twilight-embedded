@@ -18,7 +18,7 @@ def show_post():
     b = request.args.get('g')
     g = request.args.get('b')
 
-    CMD = "COM:LED:" + str(r) + str(g) + str(b)
+    CMD = "COM:LED:" + str(r) + ',' + str(g) + ',' + str(b)
 
     send_str(CMD)
     sleep(0.5)
@@ -27,7 +27,7 @@ def show_post():
         if LED_CMD .startswith("LED:"):
             send_str(LED_CMD )
 
-    return 
+    return "success"
 
 if __name__ == '__main__':
     app.run(debug=True)
