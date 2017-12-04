@@ -1,7 +1,7 @@
-#include "networking/networking.hpp"
+#include "constants/constants.hpp"
 #include "led_driver/led_driver.hpp"
 #include "node_slave/node_slave.hpp"
-
+#include "networking/networking.hpp"
 void setup() {
     //Setup LED Thread
     setup_frame();
@@ -13,7 +13,7 @@ void setup() {
     setup_i2c();
 
     // Serial.println("Starting");
-    frame.SetColor(122,12,80);
+    frame.SetColor(255,165,0);
     frame.UpdateFrame();
 }
 
