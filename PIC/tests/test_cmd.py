@@ -18,7 +18,7 @@ CMD = ARGS.cmd
 
 def send_str(str):
     data = (2,) + tuple(map(lambda x: ord(x), str)) + (3,)
-    i2c.write_i2c_block_data(slave, 0, data)
+    i2c.write_i2c_block_data(slave, 0, list(data))
 
     # i2c.write_byte(slave, 2)
     # for b in str:
