@@ -8,8 +8,6 @@ app = Flask(__name__)
 i2c = smbus.SMBus(1)
 slave = 0x12
 
-CMD = ARGS.cmd
-
 def send_str(str):
     data = tuple(map(lambda x: ord(x), str)) + (3,)
     i2c.write_i2c_block_data(slave, 2, list(data))
