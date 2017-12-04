@@ -35,12 +35,13 @@ def read():
 if CMD == "read":
     count = 0 
     while 1:
-        if count % 5000000 == 0:
+        if count % 50000 == 0:
             LED_CMD = read()
             print(LED_CMD)
             if LED_CMD.startswith("COM:"):
                 CMD = LED_CMD.split("COM:")[1]
                 send_str(CMD)
+        count += 1
 else:
     send_str(CMD)
 
