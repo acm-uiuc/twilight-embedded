@@ -1,6 +1,7 @@
-#include "networking/networking.hpp"
+#include "constants/constants.hpp"
 #include "led_driver/led_driver.hpp"
 #include "node_slave/node_slave.hpp"
+#include "networking/networking.hpp"
 
 void setup() {
     //Setup LED Thread

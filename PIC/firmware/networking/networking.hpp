@@ -60,11 +60,15 @@ void handle_network_msgs() {
     if (Serial2.available()) {
         String msg = Serial2.readString();
         interconnect.inbox.push_back(String(msg + ';' + String(NORTH)));
-    }
+        frame.SetColor(0,128,128);
+        frame.UpdateFrame();
+   }
 
     if (Serial3.available()) {
         String msg = Serial3.readString();
         interconnect.inbox.push_back(String(msg + ';' + String(SOUTH)));
+        frame.SetColor(128,128,0);
+        frame.UpdateFrame();
     }
 }
 
