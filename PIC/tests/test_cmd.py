@@ -33,9 +33,10 @@ def read():
 
 if CMD == "read":
     LED_CMD = read()
-    if LED_CMD.startswith("COM:"):
-        CMD = LED_CMD.split("COM:")[1]
-        send_str(CMD)
+    print(LED_CMD)
+    #if LED_CMD.startswith("COM:"):
+    #    CMD = LED_CMD.split("COM:")[1]
+    #    send_str(CMD)
 else:
     send_str(CMD)
 
