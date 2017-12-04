@@ -15,7 +15,7 @@ slave = 0x12
 
 CMD = ARGS.cmd
 
-if ARGS.cnd =="LOC":
+if ARGS.cmd =="LOC":
     CMD = "LOC:0,0"
 
 LOC = (0,0)
