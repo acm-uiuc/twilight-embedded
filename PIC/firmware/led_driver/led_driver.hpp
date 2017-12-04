@@ -8,9 +8,6 @@
   #include <avr/power.h>
 #endif
 
-#define LED_PIN 9
-#define STRIP_LENGTH 35
-
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
 // Parameter 3 = pixel type flags, add together as needed:
