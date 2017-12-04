@@ -7,7 +7,7 @@ i2c = smbus.SMBus(1)
 slave = 0x12
 
 def rand_px_num():
-    return randint(0, 255)
+    return str(randint(0, 255))
 
 def send_str(str): 
     i2c.write_byte(slave, 2)
