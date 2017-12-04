@@ -3,6 +3,8 @@ import smbus
 from protocols import messages
 
 PIC_ADDR = 0x12 #I2C Address of the PIC
+STX      = 2    #ASCII start of text
+ETX      = 3    #ASCII end of text
 
 class MessageBus():
     def __init__(self):
@@ -24,17 +26,21 @@ class MessageBus():
             pass
         return
 
-    def write():
-        for m in self.outbox:
-            '''protocol for sending msgs over i2c'''
-            data = m.serialize()
-            for b in data:
-                self.i2c.write_byte(PIC_ADDR, b)
-        return 
+    def write(self, msg):
+        '''protocol for sending msgs over i2c'''
+        data = msg.serialize()
+        self.i2c.write_byte(PIC_ADDR, STX)
+        for b in data:
+            self.i2c.write_byte(PIC_ADDR, ord(b))
+        self.i2c.write_byte(PIC_ADDR, ETX)
+
+    def write(self):
+        for msg in self.outbox:
+            write(msg)
 
     def send_msg(self, msg):
-        self.outbox.append(msg.serialize())
-        return
+        write(msg)
+        # self.outbox.append(msg.serialize())
 
     def recv_msgs(self):
         incomming_msgs = self.inbox
