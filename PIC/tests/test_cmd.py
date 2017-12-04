@@ -16,17 +16,20 @@ slave = 0x12
 
 CMD = ARGS.cmd
 
-def send_str(str): 
-    i2c.write_byte(slave, 2)
-    for b in str:
-        i2c.write_byte(slave, ord(b))
-    i2c.write_byte(slave, 3)
+def send_str(str):
+    data = (2,) + tuple(map(lambda x: ord(x), cmd)) + (3,)
+    i2c.write_i2c_block_data(slave, 0, data)
 
-def read(): 
+    # i2c.write_byte(slave, 2)
+    # for b in str:
+    #     i2c.write_byte(slave, ord(b))
+    # i2c.write_byte(slave, 3)
+
+def read():
     try:
-        data_received_from_Arduino = i2c.read_i2c_block_data(slave, 0,32)
+        data_received_from_Arduino = i2c.read_i2c_block_data(slave, 0, 32)
         print '[{}]'.format(', '.join(hex(x) for x in data_received_from_Arduino))
-        str_in = "" 
+        str_in = ""
         for c in data_received_from_Arduino:
             if c != 0xFF:
                 str_in += chr(c)
@@ -36,7 +39,7 @@ def read():
 
 
 if CMD == "read":
-    count = 0 
+    count = 0
     while 1:
         if count % 500000 == 0:
             LED_CMD = read()
@@ -65,26 +68,26 @@ slave = 0x12
 def rand_px_num():
     return str(randint(0, 255))
 
-def send_str(str): 
+def send_str(str):
     i2c.write_byte(slave, 2)
     for b in str:
         i2c.write_byte(slave, ord(b))
     i2c.write_byte(slave, 3)
 
-def read(): 
+def read():
     data_received_from_Arduino = i2c.read_i2c_block_data(slave, 0,16)
     print '[{}]'.format(', '.join(hex(x) for x in data_received_from_Arduino))
-    str_in = "" 
+    str_in = ""
     for c in data_received_from_Arduino:
         if c != 0xFF:
             str_in += chr(c)
     return str_in
 
 def main():
-    count = 0 
+    count = 0
     while 1:
-        if count % 50000 == 0 and NAME == 'twilight_6': 
-            LED_CMD = read() 
+        if count % 50000 == 0 and NAME == 'twilight_6':
+            LED_CMD = read()
             if LED_CMD.startswith("COM:"):
                 CMD = LED_CMD.split("COM:")[1]
                 send_str(CMD)
