@@ -9,7 +9,7 @@
 ////////////////////// INTERFACE ///////////////////////
 void setup_networking();
 void send_msg(String msg);
-void send_msgs(std::vector<String> msgs);
+void send_msgs(std::vector<String> &msgs);
 std::vector<String> recv_msgs();
 ///////////////////////// THREAD ///////////////////////
 void handle_network_msgs();
@@ -34,7 +34,7 @@ void send_msg(String msg) {
     multicast(msg); // <-- WORKS 
 }
 
-void send_msgs(std::vector<String> msgs) {
+void send_msgs(std::vector<String> &msgs) {
     for (auto &m : msgs) {
         send_msg(m);
     }

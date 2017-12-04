@@ -69,6 +69,7 @@ void NodeSlave::GetIncommingNodeMsgs() {
 
 void NodeSlave::SendMsgsToNetwork() {
     send_msgs(this->network_outbox);
+    this->network_outbox.clear();
 }
 
 void NodeSlave::SendMsgsToNode() {
