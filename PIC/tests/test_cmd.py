@@ -46,12 +46,11 @@ if CMD == "read":
                     send_str(CMD)
         count += 1
 else:
+    send_str(CMD)
     if CMD.startswith("COM:"):
         LED_CMD = CMD.split("COM:")[1]
         if LED_CMD .startswith("LED:"):
             send_str(LED_CMD )
-    send_str(CMD)
-
 
 
 
