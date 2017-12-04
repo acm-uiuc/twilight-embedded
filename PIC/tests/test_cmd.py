@@ -30,7 +30,7 @@ def main():
             if LED_CMD.startswith("COM:"):
                 CMD = LED_CMD.split("COM:")[1]
                 send_str(CMD)
-        elif count % 100000000 == 0:
+        elif count % 100000 == 0:
             send_str("COM:LED:" + rand_px_num() + ','  + rand_px_num() + ',' + rand_px_num())
         count += 1
 
