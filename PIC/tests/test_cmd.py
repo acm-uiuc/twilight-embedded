@@ -1,5 +1,6 @@
 
 import smbus
+from time import sleep
 import argparse
 
 PARSER = argparse.ArgumentParser(description=None)
@@ -47,6 +48,7 @@ if CMD == "read":
         count += 1
 else:
     send_str(CMD)
+    sleep(0.5)
     if CMD.startswith("COM:"):
         LED_CMD = CMD.split("COM:")[1]
         if LED_CMD .startswith("LED:"):
