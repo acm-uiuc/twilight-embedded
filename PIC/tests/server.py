@@ -1,9 +1,9 @@
 import smbus
 from time import sleep
 import argparse
-from flask import Flask
-
+from flask import Flask, request, Response
 app = Flask(__name__)
+
 
 i2c = smbus.SMBus(1)
 slave = 0x12
@@ -29,5 +29,5 @@ def show_post():
 
     return 
 
-
-
+if __name__ == '__main__':
+    app.run(debug=True)
