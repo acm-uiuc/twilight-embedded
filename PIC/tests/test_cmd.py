@@ -1,5 +1,7 @@
 import smbus
 from random import randint
+import platform
+NAME = platform.node()
 
 i2c = smbus.SMBus(1)
 slave = 0x12
@@ -25,12 +27,12 @@ def read():
 def main():
     count = 0 
     while 1:
-        if count % 50000 == 0: 
+        if count % 50000 == 0 and NAME == 'twilight_6': 
             LED_CMD = read() 
             if LED_CMD.startswith("COM:"):
                 CMD = LED_CMD.split("COM:")[1]
                 send_str(CMD)
-        elif count % 100000 == 0:
+        elif count % 100000 == 0 and NAME == 'twilight_5':
             send_str("COM:LED:" + rand_px_num() + ','  + rand_px_num() + ',' + rand_px_num())
         count += 1
 
