@@ -17,7 +17,7 @@
 
 // led
 #define LED_PIN 9
-#define STRIP_LENGTH 35
+#define STRIP_LENGTH 80
 
 // i2c
 #define SLAVE_ADDR 0x12
