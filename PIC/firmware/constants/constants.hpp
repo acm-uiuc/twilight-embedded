@@ -1,6 +1,10 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
+#define VERSION_MAJOR 0
+#define VERSION_MINOR 0
+#define VERSION_POINT 1 
+
 // serial
 #define BAUDRATE 9600
 
