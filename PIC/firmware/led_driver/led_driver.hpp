@@ -117,6 +117,8 @@ Adafruit_NeoPixel get_strip() {
 }
 
 void apply_frame_command(String cmd) {
+    frame.SetColor(0,0,0);
+    frame.UpdateFrame();
     Wire.end();
     frame.ApplyCommand(cmd.c_str());
     frame.UpdateFrame();
