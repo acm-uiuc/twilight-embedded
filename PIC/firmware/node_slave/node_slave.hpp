@@ -17,6 +17,7 @@ public:
     void GetIncommingNodeMsgs();
     void SendMsgsToNode();
     void ParseNodeMessageIfNeeded();
+
     uint8_t i2c_buffer_pos = 0;
     uint8_t i2c_buffer_ready = 0;
     char i2c_buffer[BUFSIZE];
@@ -24,7 +25,6 @@ public:
 private:
 
     std::vector<String> node_outbox;         // QUEUE OF MESSAGES TO GO TO THE NODE
-    std::vector<String> network_outbox;      // QUEUE OF MESSAGES TO GO OUT TO THE NETWORK
 };
 
 
