@@ -68,9 +68,7 @@ void LEDFrame::UpdateFrame() {
         strip.setPixelColor(i, this->strip.Color(this->color.r, this->color.b, this->color.g));
     }
 
-    Wire.end();
     strip.show();
-    Wire.begin();
 
     this->lastColor = this->color;
 }
