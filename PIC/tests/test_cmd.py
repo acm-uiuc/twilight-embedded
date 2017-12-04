@@ -41,11 +41,17 @@ if CMD == "read":
             LED_CMD = read()
             print(LED_CMD)
             if LED_CMD.startswith("COM:"):
-                CMD = LED_CMD.split("COM:")[1]
-                send_str(CMD)
+                SUB_CMD = LED_CMD.split("COM:")[1]
+                if SUB_CMD.startswith("LED:"):
+                    send_str(CMD)
         count += 1
 else:
+    if LED_CMD.startswith("COM:"):
+        CMD = LED_CMD.split("COM:")[1]
+        if CMD.startswith("LED:"):
+            send_str(CMD)
     send_str(CMD)
+
 
 
 
