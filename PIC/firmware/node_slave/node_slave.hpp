@@ -24,7 +24,7 @@ public:
 
 private:
 
-    std::vector<String> node_outbox;         // QUEUE OF MESSAGES TO GO TO THE NODE
+    std::vector<String> node_outbox; // QUEUE OF MESSAGES TO GO TO THE NODE
 };
 
 
@@ -88,7 +88,6 @@ void setup_i2c() {
     Wire.onReceive(receive_msgs_from_node);
     Wire.onRequest(send_msgs_to_node);
 }
-
 
 void NodeSlave::ParseNodeMessageIfNeeded() {
     if (!node_ctrlr.i2c_buffer_ready) {
