@@ -24,7 +24,7 @@ def send_str(str):
 
 def read(): 
     try:
-        data_received_from_Arduino = i2c.read_i2c_block_data(slave, 0,64)
+        data_received_from_Arduino = i2c.read_i2c_block_data(slave, 0,32)
         print '[{}]'.format(', '.join(hex(x) for x in data_received_from_Arduino))
         str_in = "" 
         for c in data_received_from_Arduino:
@@ -38,7 +38,7 @@ def read():
 if CMD == "read":
     count = 0 
     while 1:
-        if count % 500000 == 0:
+        if count % 50000 == 0:
             LED_CMD = read()
             print(LED_CMD)
             if LED_CMD.startswith("COM:"):
