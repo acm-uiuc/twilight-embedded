@@ -8,15 +8,16 @@ import cmd
 class MessageType(Enum):
     LOC = 1
     LED = 2
-    DATA = 3
+    COM = 3
     CMD = 4
 
 class Source(Enum):
-    SELF = 0
-    NORTH = 1
-    SOUTH = 2
-    #EAST = 3
-    #WEST = 4
+    WEST  = 0
+    EAST  = 1
+    NORTH = 2
+    SOUTH = 3
+
+    SELF  = 5
 
 class Message(abc.ABC):
     @abc.abstractmethod
@@ -47,7 +48,7 @@ class Message(abc.ABC):
             return led.LEDMessage.deserialize(str)
         elif str.startswith("LOC:"):
             return localization.LocalizationMessage.deserialize(str, source)
-        elif str.startswith("DATA:"):
-            return data.DataMessage.deserialize(str)
+        elif str.startswith("COM:"):
+            return data.ComMessage.deserialize(str)
         else:
             raise ValueError

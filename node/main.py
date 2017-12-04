@@ -5,11 +5,11 @@ DEVICE_ID = get_mac()
 def init():
     #Localize
 
-    #Load Program 
+    #Load Program
 
 
 def main():
-    init() 
+    init()
 
 
 if __name__ == "__main__":

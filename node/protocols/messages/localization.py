@@ -9,7 +9,7 @@ class LocalizationMessage(msgs.Message):
         self.origin_id = origin_id
         self.location = location
         self.type = MessageType.LOC
-        self.source = source 
+        self.source = source
 
     def serialize(self):
         return "{}:{},{},{},{},{}.{}".format(self.type.name, self.ID, self.location[0], self.location[1], self.hops, self.ttl, self.origin_id)
