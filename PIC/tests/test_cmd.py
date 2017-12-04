@@ -35,7 +35,7 @@ def read():
 if CMD == "read":
     count = 0 
     while 1:
-        if count % 50000 == 0
+        if count % 50000 == 0:
             LED_CMD = read()
             print(LED_CMD)
             if LED_CMD.startswith("COM:"):
