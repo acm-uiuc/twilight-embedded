@@ -18,7 +18,7 @@ def show_post():
     b = request.args.get('g')
     g = request.args.get('b')
 
-    CMD = "COM:LED:" + r + g + b
+    CMD = "COM:LED:" + str(r) + str(g) + str(b)
 
     send_str(CMD)
     sleep(0.5)
