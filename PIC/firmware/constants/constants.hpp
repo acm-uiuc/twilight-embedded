@@ -17,7 +17,7 @@
 
 // led
 #define LED_PIN 9
-#define STRIP_LENGTH 40
+#define STRIP_LENGTH 45
 
 // i2c
 #define SLAVE_ADDR 0x12
@@ -25,4 +25,4 @@
 #define ETX 3
 #define BUFSIZE 64
 
-#endif //DCONSTANTS_HPP
+#endif //DCONSTANTS_HPP5
