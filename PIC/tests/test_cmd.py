@@ -31,12 +31,14 @@ def read():
             str_in += chr(c)
     return str_in
 
+
 if CMD == "read":
-    LED_CMD = read()
-    print(LED_CMD)
-    if LED_CMD.startswith("COM:"):
-        CMD = LED_CMD.split("COM:")[1]
-        send_str(CMD)
+    while 1:
+        LED_CMD = read()
+        print(LED_CMD)
+        if LED_CMD.startswith("COM:"):
+            CMD = LED_CMD.split("COM:")[1]
+            send_str(CMD)
 else:
     send_str(CMD)
 
