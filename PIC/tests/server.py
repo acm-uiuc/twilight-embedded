@@ -15,8 +15,8 @@ def send_str(str):
 @app.route('/color', methods=['GET'])
 def show_post():
     r = request.args.get('r')
-    b = request.args.get('g')
-    g = request.args.get('b')
+    g = request.args.get('g')
+    b = request.args.get('b')
 
     CMD = "COM:LED:" + str(r) + ',' + str(g) + ',' + str(b)
 
