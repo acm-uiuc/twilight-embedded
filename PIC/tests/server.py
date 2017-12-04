@@ -5,10 +5,6 @@ from flask import Flask
 
 app = Flask(__name__)
 
-PARSER = argparse.ArgumentParser(description=None)
-PARSER.add_argument("cmd", type=str)
-ARGS = PARSER.parse_args()
-
 i2c = smbus.SMBus(1)
 slave = 0x12
 
