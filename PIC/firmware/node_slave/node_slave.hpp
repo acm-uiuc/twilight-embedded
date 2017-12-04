@@ -16,21 +16,15 @@ public:
     void GetIncommingNetworkMsgs();
     void GetIncommingNodeMsgs();
     void SendMsgsToNode();
-    void SendMsgsToNetwork();
-    void ApplyNodeLEDCmd();
-    void SortMsgsFromNode();
-
+    void ParseNodeMessageIfNeeded();
     uint8_t i2c_buffer_pos = 0;
     uint8_t i2c_buffer_ready = 0;
     char i2c_buffer[BUFSIZE];
-    std::vector<String> node_inbox;          // QUEUE OF MESSAGES FROM THE NODE
 
 private:
 
     std::vector<String> node_outbox;         // QUEUE OF MESSAGES TO GO TO THE NODE
     std::vector<String> network_outbox;      // QUEUE OF MESSAGES TO GO OUT TO THE NETWORK
-    String led_cmd;                          // QUEUE OF COMMANDS TO RUN ON THE LEDS (RIGHT NOW ITS JUST A SINGLE CMD)
-    uint8_t led_cmd_ready = 0;
 };
 
 
@@ -67,11 +61,6 @@ void NodeSlave::GetIncommingNodeMsgs() {
     }
 }
 
-void NodeSlave::SendMsgsToNetwork() {
-    send_msgs(this->network_outbox);
-    this->network_outbox.clear();
-}
-
 void NodeSlave::SendMsgsToNode() {
     //I2C Magic
     if (this->node_outbox.size() == 0) {
@@ -83,35 +72,9 @@ void NodeSlave::SendMsgsToNode() {
     this->node_outbox.erase(this->node_outbox.begin());
 }
 
-void NodeSlave::ApplyNodeLEDCmd() {
-    if (this->led_cmd_ready) {
-        apply_frame_command(this->led_cmd);
-        led_cmd_ready = 0;
-    }
-}
-
-void NodeSlave::SortMsgsFromNode() {
-
-    for (int i = 0; i < this->node_inbox.size(); i++) {
-        if (this->node_inbox[i].startsWith("LED")) {
-            this->led_cmd = this->node_inbox[i];
-            this->led_cmd_ready = 1;
-        } else if (this->node_inbox[i].startsWith("LOC")) {
-            this->network_outbox.push_back(this->node_inbox[i]);
-        } else if (this->node_inbox[i].startsWith("COM")) {
-            this->network_outbox.push_back(this->node_inbox[i]);
-        } else {
-            //Unsupported Msg Type
-            continue;
-        }
-    }
-    this->node_inbox.clear();
-}
-
 NodeSlave node_ctrlr = NodeSlave();
 
 void receive_msgs_from_node(int numBytes) {
-    // Serial.println("receive_msgs_from_node");
     (void)numBytes;
     node_ctrlr.GetIncommingNodeMsgs();
 }
@@ -121,22 +84,36 @@ void send_msgs_to_node() {
 }
 
 void setup_i2c() {
-    // Serial.println("setup_i2c");
     Wire.begin(SLAVE_ADDR);
     Wire.onReceive(receive_msgs_from_node);
     Wire.onRequest(send_msgs_to_node);
 }
 
-void run_node_slave() {
-    if (node_ctrlr.i2c_buffer_ready) {
-        node_ctrlr.node_inbox.push_back(node_ctrlr.i2c_buffer);
-        node_ctrlr.i2c_buffer_ready = 0;
+
+void NodeSlave::ParseNodeMessageIfNeeded() {
+    if (!node_ctrlr.i2c_buffer_ready) {
+        return;
     }
 
-    node_ctrlr.SortMsgsFromNode();
+    node_ctrlr.i2c_buffer_ready = 0;
+
+    String msg = node_ctrlr.i2c_buffer;
+
+    if (msg.startsWith("LED")) {
+        apply_frame_command(msg);
+    } else if (msg.startsWith("LOC")) {
+        multicast(msg);
+    } else if (msg.startsWith("COM")) {
+        multicast(msg);
+    } else {
+        //Unsupported Msg Type
+        return;
+    }
+}
+
+void run_node_slave() {
     node_ctrlr.GetIncommingNetworkMsgs();
-    node_ctrlr.SendMsgsToNetwork();
-    node_ctrlr.ApplyNodeLEDCmd();
+    node_ctrlr.ParseNodeMessageIfNeeded();
 }
 
 #endif //NODE_SLAVE_HPP

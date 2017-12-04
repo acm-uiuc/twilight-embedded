@@ -30,15 +30,15 @@ void setup_networking() {
     Serial3.begin(BAUDRATE); //SOUTHBOUND
 }
 
-void send_msg(String msg) {
-    multicast(msg); // <-- WORKS 
-}
+// void send_msg(String msg) {
+//     multicast(msg); // <-- WORKS
+// }
 
-void send_msgs(std::vector<String> &msgs) {
-    for (auto &m : msgs) {
-        send_msg(m);
-    }
-}
+// void send_msgs(std::vector<String> &msgs) {
+//     for (auto &m : msgs) {
+//         send_msg(m);
+//     }
+// }
 
 std::vector<String> recv_msgs() {
     std::vector<String> msgs = interconnect.inbox;
